@@ -10,10 +10,7 @@ Since i had done some basic django tutorial in the past, i decided to do a diffe
 
 ## Disclaimer
 
-ChatGpt was used extensively in this project, but not to copy/paste the code. I did not know any react when i started, so i used ChatGPT as a learning tool. For the most part, the code in this project was written by myself, and most of the time i was asking AI questions about how stuff works and to help me understand things better. 
-I did however copy a lot of the styling from suggestion from AI and there were some snippets that i simply had to ask for code (the copy to excel button).
-
-I dont know why im writing this disclaimer because i probably could just not mention it.
+I am not a frontend designer and a chunk of styling was only possible due to ChatGPT. I opted to spend most of my time with the logic and even refactored multiple times to improve the project structure, rather than becoming super proficient with css.
 
 ## Stack
 
