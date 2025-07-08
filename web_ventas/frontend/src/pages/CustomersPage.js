@@ -5,7 +5,7 @@ import { useCrudModal } from "../hooks/useCrudModal";
 import { useConfirmDialog } from "../hooks/useConfirmDialog";
 import { UseTableData } from "../hooks/UseTableData";
 import { useEntityConfiguration, UseEntityConfigurationKeys } from "../hooks/useEntityConfiguration";
-import {CustomersModal} from "../components/modals/CustomersModal";
+import {CustomersModal} from "../components/Modals/CustomersModal";
 import { CustomersRowMenu } from "../components/Menus/CustomersRowMenu";
 import { CustomersMenu } from "../components/Menus/CustomersMenu";
 import { GenericTable } from "../components/GenericTable";

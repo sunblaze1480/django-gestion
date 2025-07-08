@@ -22,6 +22,8 @@ var/
 .installed.cfg
 *.egg
 
+deployment_guide.md
+
 # Django
 *.log
 local_settings.py

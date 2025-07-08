@@ -6,7 +6,7 @@ import { useConfirmDialog } from "../hooks/useConfirmDialog";
 import { CustomMenuWrapper } from "../components/Wrappers/CustomMenuWrapper";
 import { ProductsRowMenu } from "../components/Menus/ProductsRowMenu";
 import { useEntityConfiguration, UseEntityConfigurationKeys } from "../hooks/useEntityConfiguration";
-import {ProductsModal} from "../components/modals/ProductsModal"
+import {ProductsModal} from "../components/Modals/ProductsModal"
 import { AdvancedPricingModal } from "../components/Modals/AdvancedPricingModal";
 import { GenericTable } from "../components/GenericTable";
 import { UseTableData } from "../hooks/UseTableData";
