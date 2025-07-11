@@ -32,6 +32,8 @@ export const defaultSalesOrder = {
         order_date: "2024-01-01",
         order_status: "Pendiente",
         total_amount: 0.0,
+        total_tax : 0.0,
+        total_net: 0.0,
         order_detail: [
     {            
       product: 0,
@@ -40,7 +42,10 @@ export const defaultSalesOrder = {
       amount: 0.0,
       payment_method: " ",
       driver: " ",
-      comments: " "
+      comments: " ",
+      unit_price: 0,
+      subtotal_tax: 0,
+      subtotal_net: 0
     }
   ]
 }

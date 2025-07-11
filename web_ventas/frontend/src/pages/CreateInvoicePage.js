@@ -17,8 +17,8 @@ export const CreateInvoicePage = () => {
     
    return (
     <div>
-        <Typography component="h6" variant="h6">Cargar datos de la factura</Typography> 
-        <Paper elevation="12" sx={{ width: '100%', minWidth:'1200px',  padding: '2%'}}>                       
+        <Typography component="h6" variant="h6">Cargar datos de la factura</Typography>
+        <Paper elevation="12" sx={{ width: '100%', minWidth:'1200px',  padding: '2%'}}>                      
             <Box sx={{ 
                 maxHeight: '400px', 
                 overflowX: 'auto',
@@ -54,13 +54,16 @@ export const CreateInvoicePage = () => {
                             ></Autocomplete>  
                         </Grid>
                         <Grid item xs={1}>
+                            <TextField  disabled label='Cant. Paquete' sx={{ width: 60 }} variant='standard'  margin="dense" type='number'  id={`quantity-included-${index}`} value={`${row.units_quantity}`}></TextField>
+                        </Grid>   
+                        <Grid item xs={1}>
                             <TextField label='Cantidad' sx={{ width: 60 }} variant='standard'  margin="dense" type='number'  id={`quantity-selection-${index}`} value={`${row.quantity}`} onChange={(event)=>handleChangeQuantity(event, index)}></TextField>
-                        </Grid>                               
+                        </Grid>                             
                         <Grid item xs={1}>
                             <TextField  label='Precio Unitario' variant='standard' margin="dense" type='number'  id={`price-selection-${index}`} value={`${parseFloat(row.unit_price).toFixed(2)}`} onChange={(event)=>handlePriceChange(event, index)}></TextField>
                         </Grid>
                         <Grid item xs={1}>
-                            <TextField label='IVA' variant="standard"  margin="dense" id={`tax-amount-${index}`} value={`${parseFloat(row.tax_amount).toFixed(2)}`}></TextField>                            
+                            <TextField label='IVA Unit.' variant="standard"  margin="dense" id={`tax-amount-${index}`} value={`${parseFloat(row.tax_amount).toFixed(2)}`}></TextField>                            
                         </Grid>                      
                         <Grid item xs={1}>
                             <TextField  label='Subtotal' variant="standard"  margin="dense" color='warning' focused id={`subtotal-${index}`}  value={`${parseFloat(row.subtotal).toFixed(2)}`}></TextField>                             
@@ -69,7 +72,7 @@ export const CreateInvoicePage = () => {
                             <TextField  label='Subtotal IVA' variant="standard"  margin="dense" color='warning' focused id={`subtotal-tax-${index}`} value={`${parseFloat(row.subtotal_tax).toFixed(2)}`}></TextField>                                                         
                         </Grid>
                         <Grid item xs={1}>
-                            <TextField  label='Subtotal con IVA' variant="standard"  margin="dense" color='success' focused id={`subtotal-net-${index}`} value={`${parseFloat(row.subtotal_net).toFixed(2)}`}></TextField>                                                         
+                            <TextField  label='Subtotal + IVA (Factura B)' variant="standard"  margin="dense" color='success' focused id={`subtotal-net-${index}`} value={`${parseFloat(row.subtotal_net).toFixed(2)}`}></TextField>                                                         
                         </Grid>
                     </Grid>            
                 </div>
@@ -99,7 +102,7 @@ export const CreateInvoicePage = () => {
                         <TextField  label='Total IVA:' variant="standard"  margin="dense" color='success' focused id={`total-tax`} value={`${parseFloat(invoice.total_taxes).toFixed(2)}`}></TextField>                                                         
                     </Grid>
                     <Grid align='right' item xs={1} >
-                        <TextField  label='Total NETO:' variant="standard"  margin="dense" color='success' focused id={`total-net`} value={`${parseFloat(invoice.total_net).toFixed(2)}`}></TextField>                                                         
+                        <TextField  label='Total + IVA (Factura B):' variant="standard"  margin="dense" color='success' focused id={`total-net`} value={`${parseFloat(invoice.total_net).toFixed(2)}`}></TextField>                                                         
                     </Grid>            
                 </Grid> 
                 </Box>                  

@@ -80,25 +80,26 @@ html, body {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
   margin-bottom: 20px;
   table-layout: auto; 
+  border-collapse: collapse !important;  
+  
 }
 
 .table-container {
   height: 50%;
   margin: 15px;
-  overflow: auto;
-  color: #e21111;
+  overflow: auto;  
+  border-radius: 12px;  
 }
 
 
 .table-head {
-  background-color: #5172c0; 
-  color: #ecf0f1;             
-  font-weight: bold;
-  text-transform: uppercase;
-  padding: 12px 15px;         
-  border-radius: 5px;        
-}
 
+  background-color: rgb(220, 243, 252);
+  color: #07031a;
+  font-weight: bold;
+  text-transform: uppercase;  
+  border: 2px solid #6c6771;
+}
 
 .table-body {
   height: 50%;

@@ -9,6 +9,9 @@ import { useAlertsContext } from '../context/AlertsContext';
 
 export const UseCreateSalePage =() => {
 
+    const RATE_IVA = 0.21
+
+
     const [customerData, setCustomerData] = useState([]);
     const [productData, setProductData] = useState([]);    
     const [salesOrder, setSalesorder] = useState(defaultSalesOrder); 
@@ -29,12 +32,18 @@ export const UseCreateSalePage =() => {
 
 
     const updatePriceAndTotal = (prevSalesOrder, price, index) => {
+    
         const updatedDetail = [...prevSalesOrder.order_detail];        
         updatedDetail[index].unit_price = parseFloat(price);            
         updatedDetail[index].amount = updatedDetail[index].unit_price*updatedDetail[index].quantity;
+        updatedDetail[index].subtotal_tax = updatedDetail[index].amount * RATE_IVA
+        updatedDetail[index].subtotal_net = updatedDetail[index].amount + updatedDetail[index].subtotal_tax
 
         const totalAmount = updatedDetail.reduce((a, {amount})=> a+amount, 0);
-        return {...prevSalesOrder, order_detail: updatedDetail, total_amount: totalAmount}
+        const totalTax = updatedDetail.reduce((a,{subtotal_tax})=> a+subtotal_tax, 0)
+        const totalNet = updatedDetail.reduce((a,{subtotal_net})=> a+subtotal_net, 0)
+
+        return {...prevSalesOrder, order_detail: updatedDetail, total_amount: totalAmount, total_tax: totalTax, total_net: totalNet }
     }
 
     const handleCustomerChange = (event, newValue) =>{
@@ -50,6 +59,8 @@ export const UseCreateSalePage =() => {
     }
 
     const handleChangeProduct = (event, newValue, index) => {
+         const tax = newValue.unit_price * RATE_IVA
+
          const detailLine = {
             product : newValue.product_id,
             status: "Pending",    
@@ -58,7 +69,9 @@ export const UseCreateSalePage =() => {
             payment_method: " ",
             driver: " ",
             comments: " ",
-            unit_price: newValue.unit_price
+            unit_price: newValue.unit_price,
+            subtotal_tax: tax,
+            subtotal_net: newValue.unit_price + tax
          };                 
         
         setSalesorder((prevSalesOrder)=>{
@@ -73,18 +86,28 @@ export const UseCreateSalePage =() => {
             const updatedDetail = [...prevSalesOrder.order_detail]
             updatedDetail.splice(index, 1)
             const totalAmount = updatedDetail.reduce((a,{amount})=>a+amount, 0)
-            return {...prevSalesOrder, order_detail: updatedDetail, total_amount: totalAmount }
+            const totalTax = updatedDetail.reduce((a,{subtotal_tax})=> a+subtotal_tax, 0)
+            const totalNet = updatedDetail.reduce((a,{subtotal_net})=> a+subtotal_net, 0)
+            return {...prevSalesOrder, order_detail: updatedDetail, total_amount: totalAmount, total_tax: totalTax, total_net: totalNet }
 
         })
     }
 
     const handleQuantityChange = (event, index) => {
-        setSalesorder((prevSalesOrder)=>{
-            const updatedDetail = [...prevSalesOrder.order_detail];          
+        setSalesorder((prevSalesOrder)=>{            
+                        
+            const updatedDetail = [...prevSalesOrder.order_detail];
             updatedDetail[index].quantity=event.target.value;
-            updatedDetail[index].amount = updatedDetail[index].unit_price * event.target.value;
-            const totalAmount = updatedDetail.reduce((a, {amount})=> a+amount, 0);            
-            return {...prevSalesOrder, order_detail: updatedDetail, total_amount: totalAmount}
+            updatedDetail[index].amount = updatedDetail[index].unit_price*updatedDetail[index].quantity;
+            updatedDetail[index].subtotal_tax = updatedDetail[index].amount * RATE_IVA
+            updatedDetail[index].subtotal_net = updatedDetail[index].amount + updatedDetail[index].subtotal_tax
+
+            const totalAmount = updatedDetail.reduce((a, {amount})=> a+amount, 0);
+            const totalTax = updatedDetail.reduce((a,{subtotal_tax})=> a+subtotal_tax, 0)
+            const totalNet = updatedDetail.reduce((a,{subtotal_net})=> a+subtotal_net, 0)
+
+                        
+            return {...prevSalesOrder, order_detail: updatedDetail, total_amount: totalAmount, total_tax: totalTax, total_net: totalNet}
         })
     }
 

@@ -87,7 +87,13 @@ export function CreateSalePage () {
                             </FormControl>
                         </Grid>
                         <Grid item sx={3}> 
-                        <TextField  variant="standard"  margin="dense" color='warning' focused id={`subtotal-${index}`} label='Subtotal' value={`${parseFloat(detail.amount).toFixed(2)}`}></TextField>
+                            <TextField  variant="standard"  margin="dense" color='warning' focused id={`subtotal-${index}`} label='Subtotal' value={`${parseFloat(detail.amount).toFixed(2)}`}></TextField>
+                        </Grid>
+                        <Grid item sx={3}> 
+                            <TextField variant="standard" disabled margin="dense" color='warning' focused id={`subtotal_tax-${index}`} label='IVA' value={`${parseFloat(detail.subtotal_tax).toFixed(2)}`}></TextField>
+                        </Grid>
+                        <Grid item sx={3}> 
+                            <TextField variant="standard" disabled margin="dense" color='warning' focused id={`subtotal_net-${index}`} label='Neto' value={`${parseFloat(detail.subtotal_net).toFixed(2)}`}></TextField>
                         </Grid>
                         <IconButton aria-label="delete"  size="small" color='error' onClick={handleRemoveProduct}><DeleteIcon fontSize='inherit'/></IconButton>
                     </Grid>            
