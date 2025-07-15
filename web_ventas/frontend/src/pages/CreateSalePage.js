@@ -29,15 +29,13 @@ export function CreateSalePage () {
     return (
         <div >
         <Typography variant="h4" component="h1" className='header-title'>
-          Crear Nueva Venta
+          Nueva Venta
         </Typography>
         <hr></hr>
 
 
-
         <Paper elevation="12" sx={{ width: '90%',  padding: '20px'}} >  
-            <div class='sales-input'>
-                
+            <div class='sales-input'>                
                 <Autocomplete
                     id="customer-selection"
                     sx={{ width: '100%' }}        
@@ -46,7 +44,10 @@ export function CreateSalePage () {
                     onChange={handleCustomerChange}
                     renderInput={(params) => <TextField margin="dense" label="Cliente" variant='standard' {...params} />}
                 ></Autocomplete>  
-            </div>                            
+            </div>
+                <Button variant="contained" color="secondary" size="small" onClick={handleAddProduct} startIcon={<AddCircleIcon/>}>
+                    Agregar Producto
+                </Button>                            
                 {salesOrder.order_detail.map((detail, index)=>(
                 <div class='sales-detail-input' key={index}>
                     <Grid container spacing={2}>
@@ -102,10 +103,8 @@ export function CreateSalePage () {
             </Paper>
             <hr></hr>
             <Stack spacing={2} direction="row"  sx={{ marginTop: '20px' }}>
-                <Button variant="outlined" color="secondary" onClick={handleAddProduct} startIcon={<AddCircleIcon/>}>
-                    Agregar Producto
-                </Button>
-                <Button variant="outlined" color="success" onClick={handleSaveClick} startIcon={<CheckIcon/>}>
+
+                <Button variant="contained" color="success" onClick={handleSaveClick} startIcon={<CheckIcon/>}>
                     GUARDAR
                 </Button> 
             </Stack>

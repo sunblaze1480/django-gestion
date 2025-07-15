@@ -57,6 +57,13 @@ export function ProductsPage() {
           Productos
         </Typography>
         <hr></hr>
+        <div className="center">
+          <CustomMenuWrapper 
+            entity="products"
+            modal={crudModal}
+           />
+        </div>
+        <br></br>
         <GenericTable          
           columnSet={columns}
           data={tableDataRows}
@@ -79,12 +86,7 @@ export function ProductsPage() {
                 rowData={pricingModal.editingItem}
             />                        
 
-        <div className="center">
-          <CustomMenuWrapper 
-            entity="products"
-            modal={crudModal}
-           />
-        </div>
+
         {confirmDialog.confirmDialogState.isOpen && (
           <ConfirmDialog
             open={confirmDialog.confirmDialogState.isOpen}

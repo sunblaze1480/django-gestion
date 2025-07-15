@@ -36,6 +36,8 @@ export function CustomersPage() {
       />
     ), [crudModal,confirmDialog]);
     
+    
+
 
     const columns = [
       ...columnSet,
@@ -56,6 +58,12 @@ export function CustomersPage() {
           Lista de Clientes
         </Typography>
         <hr></hr>
+        <div className="center">
+          <CustomersMenu             
+            crudModal={crudModal}
+           />
+        </div>
+        <br></br>
         <GenericTable          
           columnSet={columns}
           data={tableDataRows}
@@ -72,11 +80,7 @@ export function CustomersPage() {
             </CustomersModal>
         )}
         <hr></hr>
-        <div className="center">
-          <CustomersMenu             
-            crudModal={crudModal}
-           />
-        </div>
+
         {confirmDialog.confirmDialogState.isOpen && (
           <ConfirmDialog
             open={confirmDialog.confirmDialogState.isOpen}

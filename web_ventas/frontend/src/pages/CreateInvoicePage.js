@@ -1,8 +1,9 @@
 import React from 'react'
-import { TextField,  Typography, Button, Autocomplete, Paper, Grid, Box} from '@mui/material'
+import { TextField,  Typography, Button, Autocomplete, Paper, Grid, Box, Modal} from '@mui/material'
 import Stack from '@mui/material/Stack';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useCreateInvoicePage } from '../hooks/useCreateInvoicePage';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 
 
 export const CreateInvoicePage = () => {
@@ -17,7 +18,14 @@ export const CreateInvoicePage = () => {
     
    return (
     <div>
-        <Typography component="h6" variant="h6">Cargar datos de la factura</Typography>
+        <Typography variant="h4" component="h1" className='header-title'>
+            Nueva Factura
+        </Typography>
+        <hr></hr>
+        <div class="center">
+            <Button variant="contained" color="warning" startIcon={<AutoAwesomeIcon/>}>Generacion Automatica</Button>            
+        </div>
+        <br></br>
         <Paper elevation="12" sx={{ width: '100%', minWidth:'1200px',  padding: '2%'}}>                      
             <Box sx={{ 
                 maxHeight: '400px', 
@@ -38,8 +46,12 @@ export const CreateInvoicePage = () => {
                 '& .MuiAutocomplete-root': {
                     fontSize: '0.875rem',
                 }
-            }}>
-            <Typography component ="h5" variant='h5'>Seleccionar Productos</Typography>
+            }}>            
+            <Stack spacing={2} direction="row"  sx={{ marginTop: '20px' }}>
+                <Button variant="contained" size="small" color="secondary" onClick={handleAddProduct} startIcon={<AddCircleIcon/>}>
+                    Agregar producto
+                </Button>
+            </Stack>
             {invoice.detail.map((row, index)=>(
                 <div key={index}>
                     <Grid container spacing={2} sx={{fontSize:10, flexWrap: 'nowrap'}}>
@@ -66,13 +78,13 @@ export const CreateInvoicePage = () => {
                             <TextField label='IVA Unit.' variant="standard"  margin="dense" id={`tax-amount-${index}`} value={`${parseFloat(row.tax_amount).toFixed(2)}`}></TextField>                            
                         </Grid>                      
                         <Grid item xs={1}>
-                            <TextField  label='Subtotal' variant="standard"  margin="dense" color='warning' focused id={`subtotal-${index}`}  value={`${parseFloat(row.subtotal).toFixed(2)}`}></TextField>                             
+                            <TextField  label='Subtotal' variant="standard"  margin="dense" color='primary' focused id={`subtotal-${index}`}  value={`${parseFloat(row.subtotal).toFixed(2)}`}></TextField>                             
                         </Grid>
                         <Grid item xs={1}>
                             <TextField  label='Subtotal IVA' variant="standard"  margin="dense" color='warning' focused id={`subtotal-tax-${index}`} value={`${parseFloat(row.subtotal_tax).toFixed(2)}`}></TextField>                                                         
                         </Grid>
                         <Grid item xs={1}>
-                            <TextField  label='Subtotal + IVA (Factura B)' variant="standard"  margin="dense" color='success' focused id={`subtotal-net-${index}`} value={`${parseFloat(row.subtotal_net).toFixed(2)}`}></TextField>                                                         
+                            <TextField  label='Subtotal + IVA (Factura B)' variant="standard"  margin="dense" color='secondary' focused id={`subtotal-net-${index}`} value={`${parseFloat(row.subtotal_net).toFixed(2)}`}></TextField>                                                         
                         </Grid>
                     </Grid>            
                 </div>
@@ -96,6 +108,9 @@ export const CreateInvoicePage = () => {
                 <Grid container spacing={2}> 
                     <Grid item xs={7}></Grid>
                     <Grid align='right'  item xs={1} >
+                        <Typography>Totales: </Typography>                                                         
+                    </Grid>
+                    <Grid align='right'  item xs={1} >
                         <TextField  label='Total Bruto:' variant="standard"  margin="dense" color='success' focused id={`total-gross`} value={`${parseFloat(invoice.total_gross).toFixed(2)}`}></TextField>                                                         
                     </Grid>
                     <Grid align='right' item xs={1} >
@@ -108,11 +123,7 @@ export const CreateInvoicePage = () => {
                 </Box>                  
     </Paper>
     <hr></hr>
-    <Stack spacing={2} direction="row"  sx={{ marginTop: '20px' }}>
-        <Button variant="outlined" color="secondary" onClick={handleAddProduct} startIcon={<AddCircleIcon/>}>
-            Agregar Producto
-        </Button>
-    </Stack>
+
     </div>    
    )
 }

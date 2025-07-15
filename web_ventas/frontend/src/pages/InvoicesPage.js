@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, IconButton } from "@mui/material";
+import { Button, IconButton, Typography } from "@mui/material";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 
@@ -7,10 +7,12 @@ export const InvoicesPage = () => {
 
     return (
         <div class='center'>  
-        <h3>Esta aplicacion aun no ha sido implementada</h3>
-                        <hr></hr>
+        <Typography variant="h4" component="h1" className='header-title'>
+          Facturas
+        </Typography>
+        <hr></hr>
         <Button href='/invoices/create'
-            variant='outlined'
+            variant='contained'
             startIcon={<AddCircleIcon />}             
         >
             Generar factura
