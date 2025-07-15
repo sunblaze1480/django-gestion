@@ -9,10 +9,10 @@ export const SalesHeaderPageMenu = () => {
         <div>
             <Stack spacing={2} direction="row">  
                 <Button href='/sales/create'
-                    variant="outlined"
+                    variant="contained"
                     startIcon={<AddCircleIcon />} 
                 >
-                Agregar                           
+                Nueva                           
             </Button>       
             </Stack>            
         </div>

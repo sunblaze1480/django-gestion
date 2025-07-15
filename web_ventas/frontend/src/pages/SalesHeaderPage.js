@@ -59,6 +59,10 @@ export function SalesHeaderPage() {
           Ventas
         </Typography>
         <hr></hr>
+        <div className="center">
+            <SalesHeaderPageMenu/>
+        </div>
+        <br></br>
         <div class='center'>                                     
         <GenericTable          
           columnSet={columns}
@@ -89,9 +93,7 @@ export function SalesHeaderPage() {
             ): ""
           }
           <hr></hr>
-          <div className="center">
-            <SalesHeaderPageMenu/>
-          </div>
+
         </div>
       </div>
     )

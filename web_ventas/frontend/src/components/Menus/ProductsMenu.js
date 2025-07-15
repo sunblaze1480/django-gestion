@@ -17,12 +17,12 @@ export function ProductsMenu({crudModal}){
     return(
         <div>
             <Stack spacing={2} direction="row">
-             <Button variant="outlined"
+             <Button variant="contained"
                 startIcon={<AddCircleIcon />} 
                 onClick={() => handleAddClick(crudModal)}>
-                Agregar                           
+                Nuevo                           
             </Button>
-            <Button variant="outlined" color='secondary' startIcon={<FileUploadIcon/>} onClick={()=>setOpenDialog(true)}>
+            <Button variant="contained" color='secondary' startIcon={<FileUploadIcon/>} onClick={()=>setOpenDialog(true)}>
                 Importar CSV
             </Button>
             <Dialog open={openDialog} onClose={()=>setOpenDialog(false)}>
@@ -31,8 +31,8 @@ export function ProductsMenu({crudModal}){
                     <input type="file" accept=".csv" onChange={handleFileChange}></input>
                 </DialogContent>
                 <DialogActions>
-                    <Button variant="outlined" startIcon={<CheckCircleIcon/>} color='success' onClick={handleFileUpload}>Subir</Button>
-                    <Button variant="outlined" color='error' startIcon={<CancelIcon/>} onClick={()=>setOpenDialog(false)}>Cancelar</Button>
+                    <Button variant="contained" startIcon={<CheckCircleIcon/>} color='success' onClick={handleFileUpload}>Subir</Button>
+                    <Button variant="contained" color='error' startIcon={<CancelIcon/>} onClick={()=>setOpenDialog(false)}>Cancelar</Button>
                 </DialogActions>
             </Dialog>
             </Stack>

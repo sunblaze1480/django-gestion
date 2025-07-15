@@ -8,6 +8,8 @@ export const useCreateInvoicePage = () =>
     
     const {tableData} = UseTableData(getProductData)
     const [invoice, setInvoice] = useState(defaultInvoice)
+    const [targetAmount, setTargetAmount] = useState(0)
+    const [targetAmountOpen, setTargetAmountOpen] = useState(false)
 
     const handleAddProduct = () => {
         setInvoice((prevInvoice)=> {
@@ -66,6 +68,12 @@ export const useCreateInvoicePage = () =>
             const totalNet = updatedDetail.reduce((a, {subtotal_net})=> a+subtotal_net,0)
             return {...prevInvoice, detail : updatedDetail, total_taxes: totalTax, total_gross: totalAmount, total_net: totalNet}
         })
+    }
+
+
+
+    const handleGeneracionAutomaticaClicked = () => {
+        setTargetAmountOpen(true)
     }
 
     return {

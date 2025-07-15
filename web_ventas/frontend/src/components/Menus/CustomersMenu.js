@@ -14,10 +14,10 @@ export function CustomersMenu({crudModal}){
     return(
         <div>
             <Stack spacing={2} direction="row">
-             <Button variant="outlined"
+             <Button variant="contained"
                 startIcon={<AddCircleIcon />} 
                 onClick={() => handleAddClick(crudModal)}>
-                Agregar                       
+                Nuevo                       
             </Button>            
             </Stack>            
         </div>
