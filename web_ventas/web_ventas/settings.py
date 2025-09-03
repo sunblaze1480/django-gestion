@@ -14,12 +14,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-gh62$46+um)16s03go+$z+em+-(2zxv0ao$z(pk+!#8bj+yerz"
+SECRET_KEY = os.environ.get('SECRET_KEY', 'False')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['31.97.252.93', '10.8.0.0/24', 'localhost', '127.0.0.1', '10.8.0.1']
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS',"").split(",")
+
+
 
 # Application definition
 
@@ -32,11 +34,13 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
-    "api.apps.ApiConfig",
     "rest_framework",
     "django_filters",
+    #My Apps
+    "api.apps.ApiConfig",
     "frontend.apps.FrontendConfig",
     "sales.apps.SalesConfig", 
+    "invoices.apps.InvoicesConfig"
 ]
 
 MIDDLEWARE = [
@@ -85,6 +89,8 @@ WSGI_APPLICATION = "web_ventas.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+DB_INSTANCE = os.environ.get('DB_INSTANCE',"db_test.sqlite3")
+
 DATABASES = {
     #"default": {
     #    "ENGINE": os.environ.get("DB_ENGINE", "django.db.backends.sqlite3"),
@@ -97,7 +103,7 @@ DATABASES = {
 
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / DB_INSTANCE,
     }
 }
 
