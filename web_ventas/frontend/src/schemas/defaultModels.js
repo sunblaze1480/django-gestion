@@ -1,3 +1,6 @@
+//I called these "defaults" because this is the base that is used whenever creating new elements,
+//but they should probably be called SCHEMA.
+
 export const defaultCustomer = {
     customer_id : 0,
     name : '',
@@ -68,21 +71,22 @@ export const defaultPriceList = {
 export const defaultInvoiceDetail = {
   
   product: 0,
-  unit_price: 0,
-  tax_amount:0,
+  declared_unit_price: 0,
+  unit_tax_amount: 0,
   quantity: 1,
-  subtotal:0,
-  subtotal_tax: 0,
-  subtotal_net: 0
-
+  quantity_in_package: 1,
+  gross_amount:0,
+  tax_amount: 0,
+  net_amount: 0
 }
 
-export const defaultInvoice = {
-    detail:[
+export const defaultInvoiceHeader = {
+    invoice_type: 'A',
+    customer: 0,
+    details:[
       defaultInvoiceDetail
     ], 
-    total_gross:0,
-    total_taxes: 0,
-    total_net: 0
+    total_gross_amount:0,
+    total_tax_amount: 0,
+    total_net_amount: 0
 }
-

@@ -8,7 +8,6 @@ import { useCrudModal } from '../hooks/useCrudModal';
 import { SalesHeaderRowMenu } from '../components/Menus/SalesHeaderRowMenu';
 import { getSalesDetails } from '../services/salesApi';
 import { SalesHeaderPageMenu } from '../components/Menus/SalesHeaderPageMenu';
-import { useAlertsContext } from '../context/AlertsContext';
 import { GenericTable } from '../components/GenericTable';
 import { UseTableData } from '../hooks/UseTableData';
 import { getSalesHeaders } from '../services/salesApi';

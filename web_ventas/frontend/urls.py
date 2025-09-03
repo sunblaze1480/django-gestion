@@ -11,5 +11,6 @@ urlpatterns = [
     path('pricelists/create', index),
     path('shipments', index),
     path('invoices', index),
-    path('invoices/create', index)
+    path('invoices/create', index),
+    path('invoices/<pk>', index)
 ]
