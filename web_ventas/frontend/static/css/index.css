@@ -160,6 +160,9 @@ html, body {
   border-radius: 10px;  
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5) ;  
   animation: fadeIn 0.3s ease-in-out;
+  display:flex;
+  flex-direction: column;
+  gap: 2
   
 }
 

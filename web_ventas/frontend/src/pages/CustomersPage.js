@@ -36,9 +36,6 @@ export function CustomersPage() {
       />
     ), [crudModal,confirmDialog]);
     
-    
-
-
     const columns = [
       ...columnSet,
       {
@@ -50,7 +47,6 @@ export function CustomersPage() {
       },
     ];  
 
-    console.log("GenericTable props", { tableDataRows, keyField, columns });
     return (
       <div>
         <div className="center">          

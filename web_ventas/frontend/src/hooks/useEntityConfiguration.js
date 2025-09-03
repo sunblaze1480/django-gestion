@@ -1,12 +1,13 @@
 import React, {useMemo} from "react";
-import { defaultCustomer, defaultProduct, defaultSalesHeader, defaultSalesOrder, defaultPriceList } from "../schemas/defaultModels";
+import { defaultCustomer, defaultProduct, defaultSalesHeader, defaultSalesOrder, defaultPriceList, defaultInvoiceHeader } from "../schemas/defaultModels";
 
 const entityDefaults = {
     customers: defaultCustomer,
     products: defaultProduct,
     salesHeader: defaultSalesHeader,
     salesOrder: defaultSalesOrder,
-    priceList: defaultPriceList
+    priceList: defaultPriceList,
+    invoiceHeader: defaultInvoiceHeader
 }
 
 const entityColumnSets = {
@@ -25,7 +26,8 @@ const entityColumnSets = {
         { field: 'unit_price', headerName: 'Precio Unidad', width: 180 ,className: 'table-cell' },
         { field: 'units_quantity', headerName: 'Cant en Paquete', width: 200 , className: 'table-cell' },
         { field: 'unit_of_measure', headerName: 'Unidad Medida', width: 200 , className: 'table-cell-smaller' },
-        { field: 'stock_quantity', headerName: 'Cant. en Stock', width: 200 , className: 'table-cell-smaller' }            
+        { field: 'stock_quantity', headerName: 'Cant. en Stock', width: 200 , className: 'table-cell-smaller' },
+        { field: 'category' , headerName: 'Categoria', width: 150, className: 'table-cell-smaller'}          
     ],
     salesHeader: [
         {field: 'id', headerName:'N° Venta', width: 250, valueGetter: (params) => params.row?.id },
@@ -61,6 +63,17 @@ const entityColumnSets = {
         {field:'price_type', headerName: 'Descripcion/Tipo',width: 400},
         {field: 'unit_price', headerName: 'Precio', width: 250},
         {field: 'date_updated', headerName: 'Fecha de actualizacion', width: 250},        
+    ],
+    invoiceHeader:[
+        {field: 'id', headerName: 'id', width: 50},
+        {field: 'invoice_type', headerName: 'Tipo Factura', width: 120},
+        {field: 'customer.customer_id', headerName:'Id Cliente', width: 120,   valueGetter: (params) => params.row?.customer?.customer_id},
+        {field: 'customer.name', headerName:'Nombre Cliente', width: 180, valueGetter: (params) => params.row?.customer?.name},
+        {field: 'customer.address', headerName:'Direccion', width: 380, valueGetter: (params) => params.row?.customer?.address},
+        {field: 'invoice_date', headerName: 'Fecha Factura', width: 120},
+        {field: 'total_gross_amount', headerName: 'Total Bruto', width: 200},
+        {field: 'total_tax_amount', headerName: 'Total Impuestos', width: 200},
+        {field: 'total_net_amount', headerName: 'Total Neto', width: 200},
     ]
 }
 
@@ -69,7 +82,9 @@ const entityKeys = {
     products: 'product_id',
     salesHeader: 'id',
     salesDetail: 'sales_header.id',
-    advancedPricing: ''
+    advancedPricing: '',
+    invoiceHeader: 'id',
+    invoiceDetail:'invoice_header.id'
 }
 
 
@@ -93,15 +108,10 @@ const entityMessages = {
 
 const titles = {
     customers: 'Clientes',
-    products: 'Productos'
+    products: 'Productos',
+    invoiceHeader:'Facturas'
 }
-/*
-export function useEntityConfiguration(entity) {
-    const columnSet = entityColumnSets[entity];
-    const title = titles[entity];
 
-    return {columnSet, title}
-}*/
 export function useEntityConfiguration(entity) {
     const result = useMemo(() => {
         const columnSet = entityColumnSets[entity];

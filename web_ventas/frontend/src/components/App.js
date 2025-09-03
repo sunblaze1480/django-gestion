@@ -18,7 +18,7 @@ import { CreatePriceListPage } from "../pages/CreatePriceListPage";
 import { ShipmentsPage } from "../pages/ShipmentsPage";
 import { InvoicesPage } from "../pages/InvoicesPage";
 import { CreateInvoicePage } from "../pages/CreateInvoicePage";
-
+import { InvoiceDetailPage } from "../pages/InvoiceDetailPage"
 
 export default class App extends Component {
     constructor(props){
@@ -69,6 +69,9 @@ export default class App extends Component {
                             }/>
                             <Route path='invoices' element= {
                                 <InvoicesPage/>
+                            }/>
+                            <Route path='invoices/:id' element= {
+                                <InvoiceDetailPage/>
                             }/>
                             <Route path='invoices/create' element = {
                                 <CreateInvoicePage/>
