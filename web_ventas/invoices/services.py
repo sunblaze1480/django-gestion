@@ -46,7 +46,7 @@ class InvoiceService:
         total_tax = 0
         total_net = 0
 
-        available_products = InvoiceProductRules.objects.all().order_by('product__unit_price')
+        available_products = InvoiceProductRules.objects.all().order_by('total_uses','-product__unit_price')
         result_invoice_details = []
 
         for p in available_products:
