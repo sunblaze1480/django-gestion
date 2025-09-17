@@ -46,7 +46,7 @@ class InvoiceService:
         total_tax = 0
         total_net = 0
 
-        available_products = InvoiceProductRules.objects.all().order_by('total_uses','-product__unit_price')
+        available_products = InvoiceProductRules.objects.select_related('product').order_by('total_uses','-product__unit_price')
         result_invoice_details = []
 
         for p in available_products:
@@ -59,6 +59,12 @@ class InvoiceService:
                 total_tax += tax
                 total_net += (amount+tax)
                 result_invoice_details.append({'product': p.product, 'quantity': p.quantity_per_invoice, 'quantity_in_package': p.product.units_quantity, 'declared_unit_price':p.product.unit_price, 'gross_amount':amount, 'tax_amount': tax, 'net_amount':amount+tax } )
+                
+                #actualizo total uses
+                p.total_uses = F('total_uses') + 1
+                p.save(update_fields=['total_uses'])  
+                p.refresh_from_db(fields=['total_uses'])
+                
             
             if accumulated_amount >= target:
                 break
