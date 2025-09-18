@@ -138,26 +138,26 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-if os.environ.get("LOG_PATH"):
-    LOGGING = {
-        "version": 1,
-        "disable_existing_loggers": False,
-        "handlers": {
-            "file": {
-                "level": "ERROR",
-                "class": "logging.FileHandler",
-                "filename": os.environ.get("LOG_PATH"),
-            },
-        },
-        "loggers": {
-            "django": {
-                "handlers": ["file"],
-                "level": "ERROR",
-                "propagate": True,
-            },
-        },
-    }
+log_path = os.environ.get("LOG_PATH") or os.path.join(BASE_DIR, "logs", "django.log")
 
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "file": {
+            "level": "ERROR",
+            "class": "logging.FileHandler",
+            "filename": log_path,
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["file"],
+            "level": "ERROR",
+            "propagate": True,
+        },
+    },
+}
 REST_FRAMEWORK = {    
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
