@@ -39,7 +39,7 @@ def automatic_invoice_generator(request):
     except Exception:
         return Response("target_amount must be a number", status=status.HTTP_400_BAD_REQUEST)
 
-    proposed_invoice = InvoiceService.automatic_invoice_proposal(target, customer)
+    proposed_invoice = InvoiceService.automatic_invoice_from_stock(target, customer)
 
     if proposed_invoice:
         serializer = AutomaticGeneratorInvoiceSerializer(proposed_invoice)

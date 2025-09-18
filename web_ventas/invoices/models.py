@@ -48,7 +48,7 @@ class InvoiceDetail(models.Model):
 
 
 class InvoiceProductRules(models.Model):
-    product = models.ForeignKey(Products, on_delete=models.CASCADE)
+    product = models.OneToOneField(Products, on_delete=models.CASCADE, related_name='invoice_rules')
     total_uses = models.IntegerField(default=0)
     quantity_per_invoice = models.IntegerField(default=1)
     has_usage_limit = models.BooleanField(default=False)
