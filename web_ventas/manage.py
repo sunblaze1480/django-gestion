@@ -7,7 +7,7 @@ import sys
 def main():
     """Run administrative tasks."""
     #os.environ.setdefault("DJANGO_SETTINGS_MODULE", "web_ventas.settings")
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "web_ventas.settings.production")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "web_ventas.settings.test")
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

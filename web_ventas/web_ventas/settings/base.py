@@ -9,6 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Load environment variables from .env file
 dotenv_path = os.environ.get("DOTENV_PATH", BASE_DIR / ".env")
+print(dotenv_path)
 load_dotenv(dotenv_path)
 
 
@@ -137,21 +138,25 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-#LOGGING = {
-#    'version': 1,
-#    'disable_existing_loggers': False,
-#    'handlers': {
-#        'console': {
-#            'class': 'logging.StreamHandler',
-#        },
-#    },
-#    'loggers': {
-#        'django.db.backends': {
-#            'handlers': ['console'],
-#            'level': 'DEBUG',  # Set the log level to DEBUG or lower
-#        },
-#    },
-#}
+if os.environ.get("LOG_PATH"):
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "handlers": {
+            "file": {
+                "level": "ERROR",
+                "class": "logging.FileHandler",
+                "filename": os.environ.get("LOG_PATH"),
+            },
+        },
+        "loggers": {
+            "django": {
+                "handlers": ["file"],
+                "level": "ERROR",
+                "propagate": True,
+            },
+        },
+    }
 
 REST_FRAMEWORK = {    
     'DEFAULT_FILTER_BACKENDS': [
