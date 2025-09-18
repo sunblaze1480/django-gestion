@@ -29,6 +29,8 @@ deployment_guide.md
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+db_test.sqlite3
+db_test.sqlite3-journal
 media/
 staticfiles/
 
