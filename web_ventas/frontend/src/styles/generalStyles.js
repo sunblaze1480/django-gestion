@@ -77,7 +77,7 @@ export const pageHeaderStyles = () => ({
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      marginBottom: '16px',
+      marginBottom: '10px',
 })
 
 

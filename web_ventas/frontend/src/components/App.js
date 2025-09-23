@@ -20,7 +20,7 @@ import { InvoicesPage } from "../pages/InvoicesPage";
 import { CreateInvoicePage } from "../pages/CreateInvoicePage";
 import { InvoiceDetailPage } from "../pages/InvoiceDetailPage"
 import { createTheme, ThemeProvider, CssBaseline } from '@mui/material';
-
+import { AppBreadcrumbs } from "./AppBreadcrumbs";
 export default function App () {    
 
     const [open, setOpen] = useState(false)
@@ -50,9 +50,10 @@ export default function App () {
                 <AlertsContextProvider>
                     <Router>
                         <TopNavBar open={open} toggleDrawer={toggleDrawer}></TopNavBar>
-                        <ClippedDrawer open={open} setOpen={setOpen}></ClippedDrawer>
+                        <ClippedDrawer open={open} setOpen={setOpen}></ClippedDrawer>                        
                         <div class='content'>
-                        <div style={{ padding: '16px 24px' }}>
+                            <AppBreadcrumbs/>
+                        <div style={{ padding: '0px 24px' }}>
                             <Routes>
                             <Route path='/products' element={                                
                                     <ProductsPage />                                 
