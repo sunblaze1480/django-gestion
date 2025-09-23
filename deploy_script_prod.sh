@@ -13,6 +13,7 @@ echo " Branch -> $BRANCH"
 
 export DJANGO_SETTINGS_MODULE=web_ventas.settings.production
 export DOTENV_PATH="$APP_DIR/.env"
+export LOG_PATH="/opt/web_ventas/logs/log-prod.log"
 
 # Process
 
