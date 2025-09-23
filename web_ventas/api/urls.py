@@ -17,5 +17,5 @@ urlpatterns = [
     ##   CUSTOMERS
     path("customers", CustomersView.as_view()),
     path("customers/<int:pk>", CustomersView.as_view()),
-    path("create-customer/", CustomersView.as_view()),    
+    path("create-customer/", CustomersView.as_view()),
 ]

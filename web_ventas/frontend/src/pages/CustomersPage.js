@@ -28,7 +28,7 @@ export function CustomersPage() {
       tableData.map((item) => ({ ...item, id: item[keyField] })),
       [tableData, keyField]
     );
-
+  
     const renderRowMenu = useMemo(() => (params) => (
       <CustomersRowMenu
         row={params.row}

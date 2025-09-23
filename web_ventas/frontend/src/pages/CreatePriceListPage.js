@@ -59,7 +59,7 @@ export const CreatePriceListPage = () => {
                         console.error(error.message)
                     })
                 }catch(error){
-                    console.log(error.message)
+                    console.log(error.message)  
                     openAlert("error", "Error cargando csv")
                 }
             } //Fin onload

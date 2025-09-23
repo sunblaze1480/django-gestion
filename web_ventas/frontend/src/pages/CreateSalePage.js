@@ -21,7 +21,7 @@ export function CreateSalePage () {
         advancedPricing,
         handleCustomerChange,
         handleAddProduct,
-        handleChangeProduct,
+        handleChangeProduct,  
         handleRemoveProduct,
         handleQuantityChange,
         handlePriceChange,

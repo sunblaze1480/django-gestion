@@ -85,7 +85,7 @@ export function CreateShipmentPage () {
                     Agregar Producto
                 </Button>
                 <Button variant="outlined" color="success" onClick={handleSaveClick} startIcon={<CheckIcon/>}>
-                    GUARDAR
+                    GUARDAR  
                 </Button> 
             </Stack>
         </div>
