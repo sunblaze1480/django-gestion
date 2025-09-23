@@ -25,9 +25,8 @@ export function ProductsModal({open, onModalClose, onDatabaseAction, rowData, mo
             onDatabaseAction('Success', msg);
             onModalClose();
         })
-        .catch((error)=>{                        
-            const errorResponseJson = JSON.parse(error.message);                     
-            onDatabaseAction('Error', errorResponseJson.Error);            
+        .catch((error)=>{                                    
+            onDatabaseAction('Error', error);
             console.log(errorResponseJson.Error);
         })                        
     }
