@@ -50,7 +50,7 @@ export const PriceListHeaderPage = () => {
             
     return (
         <div>
-            <Typography variant="h4" component="h1" className='header-title'>
+            <Typography variant="h6" component="h6" className='header-title'>
                 Listas de Precios
             </Typography>
             <hr></hr>            
@@ -78,9 +78,9 @@ export const PriceListHeaderPage = () => {
                         </Select> 
                     </div>                 
                     <div class = 'flex-elements'>
-                        <Typography variant="h6" component="h6"><span class='highlight-text-dark'>Desc: </span>{priceList.description? priceList.description: ""}</Typography>
-                        <Typography variant="h6" component="h6"><span class='highlight-text-dark'>Tipo: </span>{priceList.type? priceList.type : ""}</Typography>
-                        <Typography variant="h6" component="h6"><span class='highlight-text-dark'>Categoria: </span>{priceList.category? priceList.category : ""}</Typography>
+                        <Typography variant="h6" component="h6"><span >Desc: </span>{priceList.description? priceList.description: ""}</Typography>
+                        <Typography variant="h6" component="h6"><span >Tipo: </span>{priceList.type? priceList.type : ""}</Typography>
+                        <Typography variant="h6" component="h6"><span>Categoria: </span>{priceList.category? priceList.category : ""}</Typography>
                     </div>
                 </Paper>            
             <div>

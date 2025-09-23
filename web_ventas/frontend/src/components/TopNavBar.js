@@ -1,16 +1,23 @@
 import React from "react";
 import FlareIcon from '@mui/icons-material/Flare';
-import { appBarContainerStyles, appBarStyles } from '../styles/generalStyles'
-import { Typography, AppBar, Box, Container } from "@mui/material"
+import { Typography, AppBar, Box, Container, IconButton, Toolbar } from "@mui/material"
+import MenuIcon from '@mui/icons-material/Menu';
 
 
-export default function TopNavBar() {
+
+
+export default function TopNavBar({open, toggleDrawer}) {
     return(
-        <Box sx={{ display: 'flex' }}>            
-            <AppBar sx = {appBarStyles}>                                  
-                    <Typography variant='h5' noWrap component='h6' href='#'>
+        <Box sx={{ flexGrow: 1 }} class='navbar'>            
+            <AppBar position="static" sx={{ backgroundColor: "#1B1B1B", color: "#E0E0E0" }}>
+                <Toolbar>
+                    <IconButton onClick={toggleDrawer} edge="start" color="inherit">
+                        <MenuIcon></MenuIcon>
+                    </IconButton>                       
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Sistema de Gestion
                     </Typography>
+                </Toolbar>
             </AppBar>
         </Box>
     )            

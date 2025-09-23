@@ -71,7 +71,7 @@ export const CreatePriceListPage = () => {
     return (   
         <div class='center'>
             <Paper elevation="12" sx={{width:650, marginBottom:'2%'}}>
-                <Typography variant='h5' component="h5">
+                <Typography variant="h6" component="h6" className='header-title'>
                     Seleccione Lista de Precios o cree una nueva
                 </Typography>
             <Stack spacing={2} sx={{ width: 450 }}>

@@ -5,10 +5,14 @@ import Stack from '@mui/material/Stack';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CheckIcon from '@mui/icons-material/Check';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { containerStyles } from '../styles/generalStyles';
+import { useTheme } from '@emotion/react';
 
 
 
 export function CreateSalePage () {
+
+    const theme = useTheme()
 
     const {
         customerData,
@@ -28,28 +32,29 @@ export function CreateSalePage () {
 
     return (
         <div >
-        <Typography variant="h4" component="h1" className='header-title'>
-          Nueva Venta
-        </Typography>
-        <hr></hr>
-
-
-        <Paper elevation="12" sx={{ width: '90%',  padding: '20px'}} >  
-            <div class='sales-input'>                
-                <Autocomplete
-                    id="customer-selection"
-                    sx={{ width: '100%' }}        
-                    options={customerData}                
-                    getOptionLabel={(option)=>`${option.customer_id} - ${option.name} - ${option.address}`}                
-                    onChange={handleCustomerChange}
-                    renderInput={(params) => <TextField margin="dense" label="Cliente" variant='standard' {...params} />}
-                ></Autocomplete>  
+            <div>
+                <Typography variant="h6" component="h6" className='header-title'>
+                    Nueva Venta
+                </Typography>
             </div>
+            <hr></hr>          
+
+            <div style={{ ...containerStyles(theme), height: '70vh' }}>
+                <div class='sales-input'>                
+                    <Autocomplete
+                        id="customer-selection"
+                        sx={{ width: '100%' }}        
+                        options={customerData}                
+                        getOptionLabel={(option)=>`${option.customer_id} - ${option.name} - ${option.address}`}                
+                        onChange={handleCustomerChange}
+                        renderInput={(params) => <TextField margin="dense" label="Cliente" variant='standard' {...params} />}
+                    ></Autocomplete>  
+                </div>
                 <Button variant="contained" color="secondary" size="small" onClick={handleAddProduct} startIcon={<AddCircleIcon/>}>
                     Agregar Producto
-                </Button>                            
+                </Button>
                 {salesOrder.order_detail.map((detail, index)=>(
-                <div class='sales-detail-input' key={index}>
+                <div  key={index}>
                     <Grid container spacing={2}>
                         <Grid item sx={15}>
                             <Autocomplete
@@ -98,12 +103,11 @@ export function CreateSalePage () {
                         </Grid>
                         <IconButton aria-label="delete"  size="small" color='error' onClick={handleRemoveProduct}><DeleteIcon fontSize='inherit'/></IconButton>
                     </Grid>            
-                </div>))}                         
-                    <Typography variant="h6"className='highlight-text-dark' align='right'>Total:   ${parseFloat(salesOrder.total_amount).toFixed(2)}</Typography>
-            </Paper>
+                </div>))}   
+            </div>                                  
+                <Typography variant="h6" align='right'>Total:   ${parseFloat(salesOrder.total_amount).toFixed(2)}</Typography>
             <hr></hr>
             <Stack spacing={2} direction="row"  sx={{ marginTop: '20px' }}>
-
                 <Button variant="contained" color="success" onClick={handleSaveClick} startIcon={<CheckIcon/>}>
                     GUARDAR
                 </Button> 

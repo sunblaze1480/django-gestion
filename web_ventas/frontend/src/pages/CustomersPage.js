@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useMemo } from "react";
-import { Typography } from "@mui/material"
+import { Typography, Divider } from "@mui/material"
 import { ConfirmDialog } from "../components/ConfirmDialog";
 import { useCrudModal } from "../hooks/useCrudModal";
 import { useConfirmDialog } from "../hooks/useConfirmDialog";
@@ -10,6 +10,7 @@ import { CustomersRowMenu } from "../components/Menus/CustomersRowMenu";
 import { CustomersMenu } from "../components/Menus/CustomersMenu";
 import { GenericTable } from "../components/GenericTable";
 import { getCustomerData } from "../services/customersApi";
+import { pageHeaderStyles } from "../styles/generalStyles";
 
 
 
@@ -49,23 +50,24 @@ export function CustomersPage() {
 
     return (
       <div>
-        <div className="center">          
-        <Typography variant="h4" component="h1" className='header-title'>
-          Lista de Clientes
-        </Typography>
-        <hr></hr>
-        <div className="center">
-          <CustomersMenu             
-            crudModal={crudModal}
-           />
+
+        <div style={pageHeaderStyles()}>          
+            <Typography variant="h5" component="h2">
+              Lista de Clientes
+            </Typography>                
+            <CustomersMenu             
+              crudModal={crudModal}
+            />          
         </div>
-        <br></br>
+
+        <Divider sx={{ mb: 2, borderColor: 'rgba(255,255,255,0.2)' }} />
+
+
         <GenericTable          
           columnSet={columns}
           data={tableDataRows}
-          containerHeight="80vh"          
-        /> 
-        </div>
+          containerHeight="75vh"          
+        />         
         {crudModal.open && crudModal.editingItem && (
             <CustomersModal 
                 open={crudModal.open}
