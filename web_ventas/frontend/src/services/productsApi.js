@@ -1,9 +1,9 @@
 const getProductsEndpoint = '/api/get-products';
 
 const endpoints = {
-    'getProducts': 'api/get-products',
-    'updateProduct': `/api/update-product/`,
-    'removeProduct': `/api/delete-product/`,
+    'getProducts': '/api/products/',
+    'updateProduct': `/api/products/`,
+    'removeProduct': `/api/products/`,
     'massUpdate': `/api/products/massupdate`,
     'getAdvancedPricing': `/api/products/advancedPricing/`,
     'getPricingTypes': `/api/products/pricingTypes`,
@@ -19,14 +19,14 @@ const messages = {
 
 const getApiProps=( editedData, mode)=>{
     const req = {
-      apiurl : '',
+      apiurl : '/api/products/',
       props : {method: '', headers:{ 'Content-Type': 'application/json'}, body: JSON.stringify(editedData)}
     }
     if (mode === 'U') {
-      req.apiurl = `/api/update-product/${editedData.product_id}`;
+      req.apiurl = `/api/products/${editedData.product_id}/`;
       req.props.method = 'PUT'        
     }else{
-      req.apiurl = `/api/create-product`;
+      req.apiurl = `/api/products/`;
       req.props.method = 'POST'
     }
 
@@ -36,13 +36,15 @@ const getApiProps=( editedData, mode)=>{
 export const getProductData = () => {
     return new Promise(async(resolve, reject)=>{
         try {
-            const response = await fetch(getProductsEndpoint)
+            const response = await fetch(endpoints.getProducts)
             if (response.ok){
                 const data = await response.json();                
                 resolve(data);
             }else{
+                reject(json.stringify(response))
                 throw new Error('Error calling Products API')
-            }            
+                
+            }
         }
         catch(e){
             reject(e);
@@ -63,7 +65,7 @@ export const callUpdateCreateAPI = (editedData, mode) =>{
             {
                 const errorResponse = await response.json();                
                 console.log(errorResponse)
-                reject(new Error(JSON.stringify(errorResponse)));  
+                reject(JSON.stringify(errorResponse));  
             }        
         }catch(error){
             console.log(error);
@@ -74,7 +76,7 @@ export const callUpdateCreateAPI = (editedData, mode) =>{
 export const callDeleteApi = (product_id) =>{
     return new Promise(async(resolve, reject)=>{
       try{
-       const response = await fetch(`${endpoints.removeProduct}${product_id}`, { 
+       const response = await fetch(`${endpoints.removeProduct}${product_id}/`, { 
           method: 'DELETE',
           headers: {'Content-type':'Application/JSON'}
         })          
@@ -85,7 +87,7 @@ export const callDeleteApi = (product_id) =>{
         }  else
         {
           console.log(response);
-          reject("Error calling delete API");
+          reject(JSON.stringify(errorResponse));  
         }          
       }catch(error)
       {
@@ -111,9 +113,8 @@ export const callDeleteApi = (product_id) =>{
           }          
       }
       catch(error)
-      {
-        console.log(error)
-        reject(error.message)
+      {        
+        reject(error)
       }
     })
 }

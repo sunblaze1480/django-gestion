@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useMemo } from "react";
-import { Typography } from "@mui/material"
+import { Typography, Divider } from "@mui/material"
 import { ConfirmDialog } from "../components/ConfirmDialog";
 import { useCrudModal } from "../hooks/useCrudModal";
 import { useConfirmDialog } from "../hooks/useConfirmDialog";
@@ -11,6 +11,7 @@ import { AdvancedPricingModal } from "../components/Modals/AdvancedPricingModal"
 import { GenericTable } from "../components/GenericTable";
 import { UseTableData } from "../hooks/UseTableData";
 import { getProductData } from "../services/productsApi";
+import { pageHeaderStyles } from "../styles/generalStyles";
 
 export function ProductsPage() {
     
@@ -52,24 +53,23 @@ export function ProductsPage() {
     console.log("GenericTable props", { tableDataRows, keyField, columns });    
     return (
       <div>
-        <div className="center">          
-        <Typography variant="h4" component="h1" className='header-title'>
+        <div style={pageHeaderStyles()}>          
+        <Typography variant="h5" component="h2">
           Productos
-        </Typography>
-        <hr></hr>
-        <div className="center">
+        </Typography>                
           <CustomMenuWrapper 
             entity="products"
             modal={crudModal}
-           />
+          />             
         </div>
-        <br></br>
-        <GenericTable          
+
+        <Divider sx={{ mb: 2, borderColor: 'rgba(255,255,255,0.2)' }} />
+        <GenericTable
           columnSet={columns}
           data={tableDataRows}
-          containerHeight="80vh"          
+          containerHeight="75vh"          
         /> 
-        </div>
+        
         {crudModal.open && crudModal.editingItem && (
             <ProductsModal 
                 open={crudModal.open}

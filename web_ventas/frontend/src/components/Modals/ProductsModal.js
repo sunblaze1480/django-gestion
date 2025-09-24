@@ -25,9 +25,8 @@ export function ProductsModal({open, onModalClose, onDatabaseAction, rowData, mo
             onDatabaseAction('Success', msg);
             onModalClose();
         })
-        .catch((error)=>{                        
-            const errorResponseJson = JSON.parse(error.message);                     
-            onDatabaseAction('Error', errorResponseJson.Error);            
+        .catch((error)=>{                                    
+            onDatabaseAction('Error', error);
             console.log(errorResponseJson.Error);
         })                        
     }
@@ -38,8 +37,7 @@ export function ProductsModal({open, onModalClose, onDatabaseAction, rowData, mo
                 open={open} 
                 onClose={onModalClose}>                                                                                                
                     <Box class='modalContent content-center modal-small'>
-                        <div class='modalTitle'>
-                        
+                        <div class='modalTitle'>                        
                         <Typography component="h4" variant="h4" sx={modalTitleStyle}>
                             {rowData.product_id?
                                 (<>Producto: <p style={{color:'rgb(55 189 47)', display: 'inline'}}>{rowData.product_id}</p></> )

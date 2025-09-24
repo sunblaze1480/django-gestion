@@ -36,7 +36,7 @@ export function SalesVoucherModal({entityData, open, onClose}){
                 <Table>
                     <TableHead align='left' class='content-left'>
                         <TableRow class='content-left'>
-                            <TableCell align='left' class='order-detail-modal-content highlight-text-dark'>{entityData.customer.address}</TableCell>                                
+                            <TableCell align='left' class='order-detail-modal-content'>{entityData.customer.address}</TableCell>                                
                         </TableRow>
                         <TableRow class='content-left'>
                             <TableCell align='left' class='order-detail-modal-content'>{entityData.order_date}</TableCell>                                
@@ -73,8 +73,8 @@ export function SalesVoucherModal({entityData, open, onClose}){
                             <TableRow></TableRow>
                             <TableRow className='sales-voucher-total'>                                
                                 <TableCell rowSpan={1} colSpan={2}></TableCell>
-                                <TableCell class="content-center highlight-text-dark">Total: </TableCell>
-                                <TableCell class="content-center highlight-text-dark" >${entityData.total_amount} </TableCell>
+                                <TableCell class="content-center">Total: </TableCell>
+                                <TableCell class="content-center" >${entityData.total_amount} </TableCell>
                             </TableRow>                
                         </TableBody>
                     </Table>

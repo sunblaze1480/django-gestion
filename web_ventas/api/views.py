@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from .models import Products, Customers, AdvancedPricing, PricingTypes
 from .serializers import ProductsSerializer, CustomersSerializer, AdvancedPricingSerializer, PricingTypesSerializer
 from web_ventas.mixins import ListableViewMixin
+from rest_framework.viewsets import ModelViewSet
 
 logger = logging.getLogger(__name__)
 
@@ -22,66 +23,54 @@ logger = logging.getLogger(__name__)
 def main (request):
     return HttpResponse("Hello")
 
-class GetProducts(ListCreateAPIView):
+
+
+class ProductsViewSet(ModelViewSet):
     queryset = Products.objects.all()
     serializer_class = ProductsSerializer
+
+class ProductsMassCreateUpdate(APIView):    
+    def post(self, request):
+        data = request.data
+        for product_data in data:            
+            defaults =  {   'product_desc':product_data['product_desc'],
+                            'unit_price': product_data['unit_price'].replace(".", ""),
+                            'units_quantity': product_data['units_quantity'],
+                            'unit_of_measure': product_data['unit_of_measure']                            
+                        }
+            try:
+                Products.objects.update_or_create(product_id=product_data['product_id'], defaults=defaults)    
+            except Exception:
+                print(Exception)
+        return Response("CSV Procesado", status=status.HTTP_201_CREATED)
+
+
+class AdvancedPricingViewset(ListableViewMixin, viewsets.ModelViewSet):    
+    serializer_class = AdvancedPricingSerializer
+    
+    def get_queryset(self):
+        queryset = AdvancedPricing.objects.all()
+        product_id = self.request.query_params.get("product_id")
+        
+        if product_id:
+            queryset = queryset.filter(product_id=product_id)
+        return queryset
             
-    def create(self, request, *args, **kwargs):                
-        serializer = self.get_serializer(data=request.data)                              
-        try:
-            serialized_data = serializer.validated_data if serializer.is_valid() else serializer.errors
-            serializer.is_valid(raise_exception=True)
-            self.perform_create(serializer)
-        except Exception as e:                        
-            return Response({'Error':str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-        return Response({'Success': 'Product Created!'}, status=status.HTTP_201_CREATED)
-
-
-class DeleteProduct(DestroyAPIView):
-    queryset = Products.objects.all()
-    serializer_class = ProductsSerializer
-    
-    def destroy(self, request, *args, **kwargs):
-        try:
-            instance = self.get_object()            
-        except:            
-            return Response("No se encontro el producto", status=status.HTTP_204_NO_CONTENT)
-        else:            
-            self.perform_destroy(instance)
-            return Response({
-                "Success":f"Product id {kwargs['pk']} was Removed"},
-                status=status.HTTP_200_OK)
+                    
+class PricingTypesViewset(viewsets.ModelViewSet):
+    queryset = PricingTypes.objects.all()
+    serializer_class = PricingTypesSerializer
                                         
-class UpdateProduct(UpdateAPIView):
-    queryset = Products.objects.all()
-    serializer_class = ProductsSerializer
-    
-    def update(self, request, *args, **kwargs):
-        print(request.data)                
-        try:            
-            instance = self.get_object()            
-        except:
-            return Response({
-                "Not Found":f"Product id {kwargs['pk']} not found"}, status=status.HTTP_204_NO_CONTENT)            
-        else:
-            try:            
-                serializer = self.get_serializer(instance, data=request.data, partial=True)
-                serializer.is_valid(raise_exception=True)
-                self.perform_update(serializer)            
-                return Response({
-                    "Success":f"Product id {kwargs['pk']} was updated"},
-                    status=status.HTTP_200_OK)
-            except Exception as e:
-                print(e)
-                return Response({
-                    "Error": f"{e}"}, status=status.HTTP_400_BAD_REQUEST
-                )
+
 
 ##############################################################                   
 # **************** CUSTOMERS**************************########
-#For cust. i will use just one view and override each method #
 #############################################################
+
+
+class CustomersViewSet(ModelViewSet):
+    queryset = Customers.objects.all()
+    serializer_class = CustomersSerializer
 
 class CustomersView(APIView):
     
@@ -127,38 +116,4 @@ class CustomersView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
         else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-                   
-                                      
-class ProductsMassCreateUpdate(APIView):    
-    def post(self, request):
-        data = request.data
-        for product_data in data:
-            print(f"PRODUCT LINE:\n {product_data}")
-            defaults =  {   'product_desc':product_data['product_desc'],
-                            'unit_price': product_data['unit_price'].replace(".", ""),
-                            'units_quantity': product_data['units_quantity'],
-                            'unit_of_measure': product_data['unit_of_measure']                            
-                        }
-            try:
-                Products.objects.update_or_create(product_id=product_data['product_id'], defaults=defaults)    
-            except Exception:
-                print(Exception)
-        return Response("CSV Procesado", status=status.HTTP_201_CREATED)
-
-
-class AdvancedPricingViewset(ListableViewMixin, viewsets.ModelViewSet):    
-    serializer_class = AdvancedPricingSerializer
-    
-    def get_queryset(self):
-        queryset = AdvancedPricing.objects.all()
-        product_id = self.request.query_params.get("product_id")
-        
-        if product_id:
-            queryset = queryset.filter(product_id=product_id)
-        return queryset
-            
-                    
-class PricingTypesViewset(viewsets.ModelViewSet):
-    queryset = PricingTypes.objects.all()
-    serializer_class = PricingTypesSerializer
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)                                                   

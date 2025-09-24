@@ -19,42 +19,22 @@ import { ShipmentsPage } from "../pages/ShipmentsPage";
 import { InvoicesPage } from "../pages/InvoicesPage";
 import { CreateInvoicePage } from "../pages/CreateInvoicePage";
 import { InvoiceDetailPage } from "../pages/InvoiceDetailPage"
-import { createTheme, ThemeProvider, CssBaseline } from '@mui/material';
-import { AppBreadcrumbs } from "./AppBreadcrumbs";
-export default function App () {    
 
-    const [open, setOpen] = useState(false)
-
-        const darkTheme = createTheme({
-    palette: {
-        mode: 'dark',
-        container: {
-            main: "#1F1F1F",
-            text: "#E0E0E0"
-        },
-        tableHeader: {
-            main: "#2A2A2A"
-        }
-    },    
-    });
-
-    const toggleDrawer = () => {
-        setOpen((prevOpen)=> !prevOpen )
+export default class App extends Component {
+    constructor(props){
+        super(props);
     }
-        
-        return(            
-            <ThemeProvider theme={darkTheme}>
-                <CssBaseline />
-            <div id='app'>
 
+
+    render(){
+        return(            
+            <div id='app'>
                 <AlertsContextProvider>
                     <Router>
-                        <TopNavBar open={open} toggleDrawer={toggleDrawer}></TopNavBar>
-                        <ClippedDrawer open={open} setOpen={setOpen}></ClippedDrawer>                        
+                        <TopNavBar></TopNavBar>
+                        <ClippedDrawer></ClippedDrawer>
                         <div class='content'>
-                            <AppBreadcrumbs/>
-                        <div style={{ padding: '0px 24px' }}>
-                            <Routes>
+                        <Routes>
                             <Route path='/products' element={                                
                                     <ProductsPage />                                 
                             } />                               
@@ -99,16 +79,13 @@ export default function App () {
                             }/>
                         </Routes>
                         </div>
-                        
-                        </div>
                     </Router>
                     <AlertSnackbar>                        
                     </AlertSnackbar>
                 </AlertsContextProvider>
             </div>
-            </ThemeProvider>
         ); 
-    
+    }
 }
 const appDiv = document.getElementById("main");
-render(<App />, appDiv);  
+render(<App />, appDiv);
