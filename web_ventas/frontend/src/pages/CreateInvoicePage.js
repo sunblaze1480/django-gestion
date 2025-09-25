@@ -38,17 +38,18 @@ export const CreateInvoicePage = () => {
             <CreateInvoiceMenu invoice={invoice} handleGeneracionAutomaticaClicked={handleGeneracionAutomaticaClicked}/>
         </div>
 
-        <Divider sx={{ mb: 2, borderColor: 'rgba(255,255,255,0.2)' }} />
-        <div style={{ ...containerStyles(theme), height: '70vh' }}>
+        <Divider sx={{ mb: 2, borderColor: 'rgba(255,255,255,0.2)' }} />               
+        <div style={{ ...containerStyles(theme), height: '60vh' }}>
             <Autocomplete
                 id="customer-selection"
-                sx={{ width: '30%' }}        
+                sx={{ width: '50%' }}        
                 options={customerData}             
                 getOptionLabel={(option)=>`${option.customer_id??''} - ${option.name??''} - ${option.address??''}`}                
                 onChange={handleCustomerChange}
                 value={customerData.find(c => c.customer_id === invoice.customer) ?? null}
-                renderInput={(params) => <TextField margin="dense" label="Cliente" variant='standard' {...params} />}
-            ></Autocomplete>           
+                renderInput={(params) => <TextField margin="dense" label="Cliente" variant='filled' {...params} />}
+            ></Autocomplete> 
+           
             <Stack spacing={2} direction="row"  sx={{ marginTop: '20px' }}>
                 <Button variant="contained" size="small" color="secondary" onClick={handleAddProduct} startIcon={<AddCircleIcon/>}>
                     Agregar producto

@@ -1,10 +1,10 @@
 from django.urls import path
-from .views import SalesOrdersView, SalesHeadersView, MakePaymentView, PriceListViewSet, PriceListHeaderViewSet, PriceListMassCreateUpdate, ChangeSalesOrderStatusView 
+from .views import SalesOrdersView, SalesHeadersView, MakePaymentView, PriceListViewSet, PriceListHeaderViewSet, PriceListMassCreateUpdate, ChangeSalesOrderStatusView,SalesOrderRetrieveView
 
 urlpatterns = [
-    ##   SALES 
+    ##   SALES CRUD
     path("sales", SalesOrdersView.as_view()),
-    path("sales/<int:order_id>", SalesOrdersView.as_view()),
+    path("sales/<int:pk>", SalesOrderRetrieveView.as_view()),
     path("changestatus", ChangeSalesOrderStatusView.as_view()),
     path("salesheaders",SalesHeadersView.as_view()),
     path("salesheaders/<int:order_id>",SalesHeadersView.as_view()),
