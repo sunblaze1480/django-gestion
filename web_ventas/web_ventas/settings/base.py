@@ -12,7 +12,6 @@ dotenv_path = os.environ.get("DOTENV_PATH", BASE_DIR / ".env")
 load_dotenv(dotenv_path)
 
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
