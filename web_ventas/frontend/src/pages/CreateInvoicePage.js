@@ -1,11 +1,13 @@
 import React from 'react'
-import { TextField,  Typography, Button, Autocomplete, Paper, Grid, Box} from '@mui/material'
+import { TextField,  Typography, Button, Autocomplete, Grid, Box, Divider} from '@mui/material'
 import Stack from '@mui/material/Stack';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CheckIcon from '@mui/icons-material/Check';
 import { useCreateInvoicePage } from '../hooks/useCreateInvoicePage';
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import { CreateInvoiceMenu } from '../components/Menus/CreateInvoiceMenu';
 import InvoiceTargetAmountModal from '../components/Modals/InvoiceTargetAmountModal';
+import { containerStyles, pageHeaderStyles } from '../styles/generalStyles';
+import { useTheme } from '@emotion/react';
 
 
 export const CreateInvoicePage = () => {
@@ -25,54 +27,29 @@ export const CreateInvoicePage = () => {
         handleClose,
         invoiceGenerator } = useCreateInvoicePage();
 
-        const logInvoice = ()=>{
-            console.log("----------------")
-            console.log(JSON.stringify(invoice))
-            console.log("+++++++++++++++++")
-            console.log(invoice)
-    }
+        const theme = useTheme();
     
    return (
     <div>
-        <Typography variant="h4" component="h1" className='header-title'>
-            Nueva Factura
-        </Typography>
-        <hr></hr>
-        <div class="center">
-            <Button variant="contained" color="warning" onClick={handleGeneracionAutomaticaClicked} startIcon={<AutoAwesomeIcon/>}>Generacion Automatica</Button>
-            <Button variant="standard" color="error" onClick={logInvoice} startIcon={<AutoAwesomeIcon/>}>Console.log(invoice)</Button>
+        <div style={pageHeaderStyles()}>          
+            <Typography variant="h5" component="h2">
+              Generar nueva factura
+            </Typography>     
+            <CreateInvoiceMenu invoice={invoice} handleGeneracionAutomaticaClicked={handleGeneracionAutomaticaClicked}/>
         </div>
-        <br></br>
-        <Paper elevation="12" sx={{ width: '100%', minWidth:'1200px',  padding: '2%'}}>                      
-            <Box sx={{ 
-                maxHeight: '400px', 
-                overflowX: 'auto',
-                overflowY: 'auto',
-                overflow: 'auto',
-                                
-                mb: 2,
-                '& .MuiTextField-root': {
-                    fontSize: '0.875rem',
-                },
-                '& .MuiInputLabel-root': {
-                    fontSize: '0.875rem',
-                },
-                '& .MuiInputBase-input': {
-                    fontSize: '0.875rem',
-                },
-                '& .MuiAutocomplete-root': {
-                    fontSize: '0.875rem',
-                }
-            }}>   
+
+        <Divider sx={{ mb: 2, borderColor: 'rgba(255,255,255,0.2)' }} />               
+        <div style={{ ...containerStyles(theme), height: '60vh' }}>
             <Autocomplete
                 id="customer-selection"
-                sx={{ width: '30%' }}        
+                sx={{ width: '50%' }}        
                 options={customerData}             
                 getOptionLabel={(option)=>`${option.customer_id??''} - ${option.name??''} - ${option.address??''}`}                
                 onChange={handleCustomerChange}
                 value={customerData.find(c => c.customer_id === invoice.customer) ?? null}
-                renderInput={(params) => <TextField margin="dense" label="Cliente" variant='standard' {...params} />}
-            ></Autocomplete>           
+                renderInput={(params) => <TextField margin="dense" label="Cliente" variant='filled' {...params} />}
+            ></Autocomplete> 
+           
             <Stack spacing={2} direction="row"  sx={{ marginTop: '20px' }}>
                 <Button variant="contained" size="small" color="secondary" onClick={handleAddProduct} startIcon={<AddCircleIcon/>}>
                     Agregar producto
@@ -93,7 +70,7 @@ export const CreateInvoicePage = () => {
                             ></Autocomplete>  
                         </Grid>
                         <Grid item xs={1}>
-                            <TextField  disabled label='Cant. Paquete' sx={{ width: 60, marginLeft: '2%' }} variant='standard'  margin="dense" type='number'  id={`quantity-in-package-${index}`} value={`${row.quantity_in_package}`}></TextField>
+                            <TextField  disabled label='Cant. Paquete' sx={{ width: 100, marginLeft: '2%' }} variant='standard'  margin="dense" type='number'  id={`quantity-in-package-${index}`} value={`${row.quantity_in_package}`}></TextField>
                         </Grid>   
                         <Grid item xs={1}>
                             <TextField label='Cantidad' sx={{ width: 60 }} variant='standard'  margin="dense" type='number'  id={`quantity-selection-${index}`} value={`${row.quantity}`} onChange={(event)=>handleChangeQuantity(event, index)}></TextField>
@@ -116,8 +93,9 @@ export const CreateInvoicePage = () => {
                     </Grid>            
                 </div>
             ))}
-            <hr></hr>
-            </Box>            
+        </div>      
+            
+            <hr></hr>                  
                 <Box sx= {{                
                 mb: 2,
                 '& .MuiTextField-root': {
@@ -147,8 +125,7 @@ export const CreateInvoicePage = () => {
                         <TextField  label='Total + IVA (Factura B):' variant="standard"  margin="dense" color='success' focused id={`total-net`} value={`${parseFloat(invoice.total_net_amount).toFixed(2)}`}></TextField>                                                         
                     </Grid>            
                 </Grid> 
-                </Box>                            
-    </Paper>
+                </Box>     
     <hr></hr>
     <Stack spacing={2} direction="row"  sx={{ marginTop: '20px' }}>
         <Button variant="contained" color="success" onClick={handleSubmitInvoice} startIcon={<CheckIcon/>}>Guardar</Button>

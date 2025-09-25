@@ -5,9 +5,10 @@ export const modalContentStyle = {
       top: '50%',
       left: '50%',
       transform: 'translate(-50%, -50%)',
-      backgroundColor: '#fff',
+      backgroundColor: '#1F1F1F',
       padding: '30px',
       border: '2px solid #000',
+      color: '#E0E0E0',
       boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
       maxWidth: '500px', // Adjust maximum width as needed
       width: '100%',          

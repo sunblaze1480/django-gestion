@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect, useMemo} from 'react'
-import { Typography } from '@mui/material';
+import { Typography, Divider } from '@mui/material';
 import { useEntityConfiguration, UseEntityConfigurationKeys } from '../hooks/useEntityConfiguration';
 import { SalesDetailModal } from '../components/Modals/SalesDetailModal';
 import { EntityDataProvider } from '../context/EntityDataContext';
@@ -11,6 +11,8 @@ import { SalesHeaderPageMenu } from '../components/Menus/SalesHeaderPageMenu';
 import { GenericTable } from '../components/GenericTable';
 import { UseTableData } from '../hooks/UseTableData';
 import { getSalesHeaders } from '../services/salesApi';
+import { useTheme } from '@emotion/react';
+import { pageHeaderStyles } from '../styles/generalStyles';
 
 //TODO : Separar en custom hook vs Render
 export function SalesHeaderPage() {
@@ -22,6 +24,7 @@ export function SalesHeaderPage() {
     const [isVoucherOpen, setIsVoucherOpen] = useState(false)
     const detailModal = useCrudModal();    
     const [rowDetailData, setRowDetailData] = useState({})    
+    const theme = useTheme();
         
 
     const handleDetailDataChanged = (order_id) => {
@@ -52,48 +55,49 @@ export function SalesHeaderPage() {
       },
     ];    
   
-    return(
-      <div className="center">          
-        <Typography variant="h4" component="h1" className='header-title'>
-          Ventas
-        </Typography>
-        <hr></hr>
-        <div className="center">
-            <SalesHeaderPageMenu/>
-        </div>
-        <br></br>
-        <div class='center'>                                     
-        <GenericTable          
-          columnSet={columns}
-          data={tableData}
-          containerHeight="80vh"          
-        /> 
-          {            
-            detailModal.open ? (
-              <EntityDataProvider data={rowDetailData}>
-                <SalesDetailModal
-                  entityData={rowDetailData}
-                  open={detailModal.open}
-                  onClose={detailModal.closeModal}
-                  onDataChanges={handleDetailDataChanged}
-                />
-              </EntityDataProvider>
-            ) : ""
-          }
-          {
-            isVoucherOpen ? (
-              <EntityDataProvider data={rowDetailData}>
-                <SalesVoucherModal
-                  entityData={rowDetailData}
-                  open={isVoucherOpen}
-                  onClose={() => setIsVoucherOpen(false)}                  
-                />
-              </EntityDataProvider>
-            ): ""
-          }
-          <hr></hr>
+    return (
+  <div>
+    {/* Page header */}
+    <div
+      style={pageHeaderStyles()}
+    >
+      <Typography variant="h5" component="h2">
+        Ventas
+      </Typography>
+      
+      <SalesHeaderPageMenu />
+    </div>
 
-        </div>
-      </div>
-    )
+    <Divider sx={{ mb: 2, borderColor: 'rgba(255,255,255,0.2)' }} />
+
+    {/* Data table */}
+    <GenericTable
+      columnSet={columns}
+      data={tableData}
+      containerHeight="75vh"
+    />
+
+    {/* Modals */}
+    {detailModal.open && (
+      <EntityDataProvider data={rowDetailData}>
+        <SalesDetailModal
+          entityData={rowDetailData}
+          open={detailModal.open}
+          onClose={detailModal.closeModal}
+          onDataChanges={handleDetailDataChanged}
+        />
+      </EntityDataProvider>
+    )}
+
+    {isVoucherOpen && (
+      <EntityDataProvider data={rowDetailData}>
+        <SalesVoucherModal
+          entityData={rowDetailData}
+          open={isVoucherOpen}
+          onClose={() => setIsVoucherOpen(false)}
+        />
+      </EntityDataProvider>
+    )}
+  </div>
+);
 }

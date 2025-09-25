@@ -16,29 +16,27 @@ class SalesHeaderSerializer(serializers.ModelSerializer):
         return representation
 
 
-class SalesDetailSerializer(serializers.ModelSerializer ):     
-    product = serializers.PrimaryKeyRelatedField(queryset=Products.objects.all())        
+class SalesDetailSerializer(serializers.ModelSerializer ):         
+    product = ProductsSerializer(read_only=True)
+    product_id = serializers.PrimaryKeyRelatedField(queryset=Products.objects.all(), write_only=True, source='product')
               
     class Meta: 
         model = Sales_Detail
-        fields = ['product','status','quantity','amount', 'payment_method', 'driver', 'comments']
+        fields = ['product', 'product_id' , 'status','quantity','amount', 'payment_method', 'driver', 'comments']
         
-    def to_representation(self, instance):
-        #add product detailed information to output        
-        representation =  super().to_representation(instance)
-        representation['product'] = ProductsSerializer(instance.product).data
-        return representation
-
 
 class SalesOrderSerializer(serializers.ModelSerializer):    
     order_detail = SalesDetailSerializer( many=True)
-    customer = serializers.PrimaryKeyRelatedField(queryset=Customers.objects.all())
+    customer = CustomersSerializer(read_only=True)
+    customer_id = serializers.PrimaryKeyRelatedField(queryset=Customers.objects.all(), write_only= True, source="customer")
+    
     order_date = serializers.DateField(allow_null=True)
                        
     class Meta: 
         model = Sales_Header
-        fields = ['id', 'customer', 'order_type', 'order_date', 'order_status', 'total_amount', 'paid_amount', 'order_detail']
+        fields = ['id', 'customer', 'customer_id', 'order_type', 'order_date', 'order_status', 'total_amount', 'paid_amount', 'order_detail']
         
+    #Create header + details
     def create(self, validated_data):            
         detail_data = validated_data.pop('order_detail', [])        
         sale = Sales_Header.objects.create(**validated_data)                
@@ -46,11 +44,6 @@ class SalesOrderSerializer(serializers.ModelSerializer):
             Sales_Detail.objects.create(sales_header=sale, **item)
         sale.initialize_sale()         
         return sale
-
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        representation['customer']= CustomersSerializer(instance.customer).data
-        return representation
     
     
 class MakePaymentSerializer(serializers.Serializer):    

@@ -12,26 +12,37 @@ const endpoints = {
 export const getSalesHeaders = () => {
     return new Promise(async (resolve, reject) => {
         const props = { method: 'GET', Headers: { 'Content-Type': 'application/json' } }
-        const response = await fetch(endpoints.getSalesHeaders)
-        let json_resp = await response.json()
-        if (response.ok) {
-            resolve(json_resp)
-        } else {
-            reject(json_resp)
+        try {
+            const response = await fetch(endpoints.getSalesHeaders)
+            let json_resp = await response.json()
+            if (response.ok) {
+                resolve(json_resp)
+            } else {
+                reject(json.stringify(response))
+            }
+        }catch(e)
+        {
+            reject(e)
         }
     })
 }
 
 export const getSalesDetails = (orderId) => {
-    return new Promise(async (resolve, reject) => {
+    console.log("pepito")
+    return new Promise(async (resolve, reject) => {        
         const props = { method: 'GET', headers: { 'Content-Type': 'application/json' } }
-        const response = await fetch(`${endpoints.getSales}${orderId}`, props)
-        let json_resp = await response.json()
-        if (response.ok) {
-            resolve(json_resp)
-        } else {
-            reject(json_resp.message)
+        try {
+            const response = await fetch(`${endpoints.getSales}${orderId}`, props)
+            let json_resp = await response.json()
+            if (response.ok) {                
+                resolve(json_resp)
+            } else {
+                reject(json_resp.message)
+            }
+        }catch (e){
+            reject(json.stringify(response))
         }
+
     })
 }
 

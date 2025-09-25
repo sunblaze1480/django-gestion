@@ -12,9 +12,6 @@ export const InvoiceRowMenu = ({row}) => {
             <IconButton component={Link} to={`/invoices/${row.id}`} title='Ver Detalle' size="small" >
                 <VisibilityIcon color='warning' fontSize="inherit" ></VisibilityIcon>
             </IconButton>
-            <Button href={`invoices/${row.id}`}
-                variant='contained'             
-            ></Button>
         </TableCell>
     )
 }

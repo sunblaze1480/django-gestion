@@ -27,14 +27,13 @@ export function CreateShipmentPage () {
 
     return (
         <div >
-        <Typography variant="h4" component="h1" className='header-title'>
+        <Typography variant="h6" component="h6" className='header-title'>
           Crear Reparto
         </Typography>
         <hr></hr>
 
 
-
-        <Paper elevation="12" sx={{ width: '90%',  padding: '20px'}} >         
+        
                 <Typography variant="h6">Seleccionar pedidos a entregar</Typography>
                 {salesOrder.order_detail.map((detail, index)=>(
                 <div class='display-flex' key={index}>
@@ -79,15 +78,14 @@ export function CreateShipmentPage () {
                         </Grid>
                     </Grid>            
                 </div>))}                         
-                    <Typography variant="h6"className='highlight-text-dark' align='right'>Total:   ${parseFloat(salesOrder.total_amount).toFixed(2)}</Typography>
-            </Paper>
+                    <Typography variant="h6"className='highlight-text-dark' align='right'>Total:   ${parseFloat(salesOrder.total_amount).toFixed(2)}</Typography>            
             <hr></hr>
             <Stack spacing={2} direction="row"  sx={{ marginTop: '20px' }}>
                 <Button variant="outlined" color="secondary" onClick={handleAddProduct} startIcon={<AddCircleIcon/>}>
                     Agregar Producto
                 </Button>
                 <Button variant="outlined" color="success" onClick={handleSaveClick} startIcon={<CheckIcon/>}>
-                    GUARDAR
+                    GUARDAR  
                 </Button> 
             </Stack>
         </div>

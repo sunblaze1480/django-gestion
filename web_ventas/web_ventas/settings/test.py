@@ -14,3 +14,7 @@ DATABASES = {
 STATIC_FOLDER = os.environ.get('STATIC_FOLDER', 'staticfiles_test')
 STATIC_ROOT = os.path.join(BASE_DIR, STATIC_FOLDER)
 MEDIA_ROOT = BASE_DIR / "media_test"
+
+
+log_path = os.environ.get("LOG_PATH") or os.path.join(BASE_DIR, "logs", "django.log")
+log_level = os.environ.get("LOG_LEVEL")

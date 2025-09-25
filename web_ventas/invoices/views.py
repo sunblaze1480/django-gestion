@@ -1,13 +1,11 @@
 from django.shortcuts import render
-from decimal import Decimal
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 
-from .models import InvoiceHeader, InvoiceProductRules
-from api.models import Customers
+from .models import InvoiceHeader
 from .serializers import CreateInvoiceSerializer, ListInvoiceHeaderSerializer, RetrieveInvoiceSerializer, AutomaticGeneratorInvoiceSerializer
 from .services import InvoiceService
 
@@ -39,7 +37,7 @@ def automatic_invoice_generator(request):
     except Exception:
         return Response("target_amount must be a number", status=status.HTTP_400_BAD_REQUEST)
 
-    proposed_invoice = InvoiceService.automatic_invoice_proposal(target, customer)
+    proposed_invoice = InvoiceService.automatic_invoice_from_stock(target, customer)
 
     if proposed_invoice:
         serializer = AutomaticGeneratorInvoiceSerializer(proposed_invoice)

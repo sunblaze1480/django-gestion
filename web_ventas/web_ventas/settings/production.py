@@ -22,3 +22,43 @@ DATABASES = {
 STATIC_FOLDER = os.environ.get('STATIC_FOLDER', 'staticfiles_prod')
 STATIC_ROOT = os.path.join(BASE_DIR, STATIC_FOLDER)
 MEDIA_ROOT = BASE_DIR / "media_prod"
+
+log_path = os.environ.get("LOG_PATH") or os.path.join(BASE_DIR, "logs", "django.log")
+log_level = os.environ.get("LOG_LEVEL")
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "file": {
+            "level": log_level,
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": log_path,
+            "maxBytes": 5 * 1024 * 1024,
+            "backupCount": 3,
+            "formatter" : "verbose"
+        },
+        "console": {
+            "level":log_level,
+            "class":"logging.StreamHandler",
+            "formatter":"verbose"
+        }
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["file"],
+            "level": log_level,
+            "propagate": True,
+        },
+    },
+    "formatters": {
+        "simple" : {
+            "format": "{levelname} {asctime}: {message}",
+            "style" :"{"
+            },
+        "verbose":{
+            "format": "{levelname} {asctime} - {name} {module}.py : {lineno:d} - {message}",
+            "style": "{"
+        }
+    }
+}

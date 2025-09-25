@@ -1,10 +1,11 @@
 from django.shortcuts import render
+from django.db.models import Prefetch
 from .models import Sales_Detail, Sales_Header, PriceListDetail, PriceListHeader, Shipment
 from api.models import Products
 from rest_framework import status, viewsets, filters
 from rest_framework.views import APIView, exception_handler
 from rest_framework.decorators import action
-from rest_framework.generics import  ListCreateAPIView,  ListAPIView
+from rest_framework.generics import  ListCreateAPIView,  ListAPIView, RetrieveAPIView
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from .serializers import SalesOrderSerializer, SalesHeaderSerializer, SalesDetailSerializer, MakePaymentSerializer, ChangeSalesOrderStatusSerializer, PriceListSerializer, PriceListHeaderSerializer, ShipmentSerializer
@@ -25,29 +26,19 @@ class SalesHeadersView(ListAPIView):
             return Sales_Header.objects.filter(id=filter_param)
         return Sales_Header.objects.all()                   
                    
+                   
 class SalesOrdersView(ListCreateAPIView):      
-    # Used to handle complete sales orders, including HEADER + DETAIL information
-    # Serializer handles creating both objects
      
-    serializer_class = SalesOrderSerializer    
+    serializer_class = SalesOrderSerializer 
             
     def get_queryset(self):
-        filter_param = self.kwargs.get('order_id')
-        #If filtering, return the details of such order
-        if filter_param:
-            return Sales_Header.objects.filter(id=filter_param)
-        return Sales_Header.objects.all()        
-    
-class SalesOrderDetailView(ListAPIView):
-    #MUST have a queryset set, or redefine get_queryset
-    serializer_class = SalesDetailSerializer
+        return Sales_Header.objects.select_related("customer").prefetch_related(Prefetch("order_detail",queryset=Sales_Detail.objects.select_related("product")))
+
+class SalesOrderRetrieveView(RetrieveAPIView):
+    serializer_class = SalesOrderSerializer
     
     def get_queryset(self):
-        queryset = Sales_Detail.objects.all()
-        filter_id = self.kwargs.get('order_id')
-        if filter_id:
-            queryset = Sales_Detail.objects.filter(sales_header=filter_id)
-        return queryset
+        return Sales_Header.objects.select_related("customer").prefetch_related(Prefetch("order_detail", queryset=Sales_Detail.objects.select_related("product")))
         
         
 class MakePaymentView(APIView):

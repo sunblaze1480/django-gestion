@@ -9,6 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Load environment variables from .env file
 dotenv_path = os.environ.get("DOTENV_PATH", BASE_DIR / ".env")
+print(dotenv_path)
 load_dotenv(dotenv_path)
 
 
@@ -136,25 +137,66 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-#LOGGING = {
-#    'version': 1,
-#    'disable_existing_loggers': False,
-#    'handlers': {
-#        'console': {
-#            'class': 'logging.StreamHandler',
-#        },
-#    },
-#    'loggers': {
-#        'django.db.backends': {
-#            'handlers': ['console'],
-#            'level': 'DEBUG',  # Set the log level to DEBUG or lower
-#        },
-#    },
-#}
+log_path = os.environ.get("LOG_PATH") or os.path.join(BASE_DIR, "logs", "django.log")
+log_level = os.environ.get("LOG_LEVEL")
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s '
+                      '%(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+        },
+    },
+
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',
+    },
+
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'django.request': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'django.security': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+    }
+}
+
+
 
 REST_FRAMEWORK = {    
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
+    ],
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.JSONRenderer"
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (        
         'rest_framework_simplejwt.authentication.JWTAuthentication',

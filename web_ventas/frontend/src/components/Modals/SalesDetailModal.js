@@ -8,7 +8,7 @@ import { useSalesDetailModal } from '../../hooks/useSalesDetailModal';
 
 export function SalesDetailModal({entityData, open, onClose, onDataChanges}){
 
-    const {orderStatus, handleChangeAmount, handlePaymentClicked, handleChangeOrderStatus, handleChangeOrderStatusClicked} = useSalesDetailModal(entityData, onDataChanges);
+    const {orderStatus, handleChangeAmount, handlePaymentClicked, handleChangeOrderStatus, handleChangeOrderStatusClicked} = useSalesDetailModal(entityData, onDataChanges);    
 
     return (
         <Modal
