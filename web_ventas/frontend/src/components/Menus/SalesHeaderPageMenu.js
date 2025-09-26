@@ -1,20 +1,16 @@
 import React from 'react'
-import {Button, IconButton } from '@mui/material'
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import Stack from '@mui/material/Stack';
+import { BaseMenu } from './BaseMenu';
 
 export const SalesHeaderPageMenu = () => {
     
     return(
         <div>
-            <Stack spacing={2} direction="row">  
-                <Button href='/sales/create'
-                    variant="contained"
-                    startIcon={<AddCircleIcon />} 
-                >
-                Nueva                           
-            </Button>       
-            </Stack>            
+        <BaseMenu
+                items={[
+                { label: 'Agregar', onClick: () => window.location.href = '/sales/create' },                
+            ]}
+            >
+        </BaseMenu>          
         </div>
     )
 }

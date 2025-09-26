@@ -56,6 +56,16 @@ export const containerStyles = (theme) =>( {
     boxSizing: 'border-box'
 })
 
+export const containerAltStyles = (theme) =>( {
+  width: '96%', marginLeft:'2%', marginRight: '2%', backgroundColor: theme.palette.container.main, color : theme.palette.container.text,
+  borderRadius: '30px',
+    overflowY: 'auto', // add vertical scroll
+    overflowX: 'auto',
+    padding: '5px',    // optional: inner spacing
+    boxSizing: 'border-box'
+})
+
+
 export const dataGridStyles =(theme) => ( {
   backgroundColor: "container.main",     
   color: "container.text",
@@ -76,7 +86,7 @@ export const dataGridStyles =(theme) => ( {
 export const pageHeaderStyles = () => ({
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'space-between',
+      gap: 15,
       marginBottom: '10px',
 })
 

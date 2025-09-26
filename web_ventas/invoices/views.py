@@ -31,11 +31,11 @@ def automatic_invoice_generator(request):
     target= request.data.get('target_amount')
 
     if not customer or not target: 
-        return Response("Missing key fields in payload", status=status.HTTP_400_BAD_REQUEST)
+        return Response({"errorMessage":"Missing key fields in payload"}, status=status.HTTP_400_BAD_REQUEST)
     try:
         target = float(target)
     except Exception:
-        return Response("target_amount must be a number", status=status.HTTP_400_BAD_REQUEST)
+        return Response({"errorMessage":"target_amount must be a number"}, status=status.HTTP_400_BAD_REQUEST)
 
     proposed_invoice = InvoiceService.automatic_invoice_from_stock(target, customer)
 
@@ -43,4 +43,4 @@ def automatic_invoice_generator(request):
         serializer = AutomaticGeneratorInvoiceSerializer(proposed_invoice)
         return Response(serializer.data)
     else:
-        return Response("No se encontraron productos disponibles para facturar", status=status.HTTP_204_NO_CONTENT)
+        return Response({"message": "No se encontraron productos disponibles para facturar"}, status=status.HTTP_400_BAD_REQUEST)

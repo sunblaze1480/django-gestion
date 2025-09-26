@@ -1,25 +1,14 @@
 import React from 'react';
-import { Box, Button } from '@mui/material';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { BaseMenu } from './BaseMenu';
 
 const InvoicesMenu = () => {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        gap: 2,                             
-        flexWrap: 'wrap' 
-      }}
-    >
-      <Button
-        href="/invoices/create"
-        variant="contained"
-        startIcon={<AddCircleIcon />}
-      >
-        Generar factura
-      </Button>
-    </Box>
+    <BaseMenu
+          items={[
+            { label: 'Generar Factura', onClick: () => window.location.href = '/invoices/create' },
+        ]}
+        >
+    </BaseMenu>
   );
 };
-
 export default InvoicesMenu;

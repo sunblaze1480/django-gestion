@@ -74,7 +74,7 @@ export const getInvoiceDetails=(invoiceId)=>{
                 {
                     resolve(json_resp)
                 }else {
-                    reject(resp)
+                    reject(json_resp)
                 }
         }catch(error){
             reject(error)

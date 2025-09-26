@@ -8,7 +8,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 export default function TopNavBar({open, toggleDrawer}) {
     return(
-        <Box sx={{ flexGrow: 1 }} class='navbar'>            
+        <Box sx={{ flexGrow: 1 }}>            
             <AppBar position="static" sx={{ backgroundColor: "#1B1B1B", color: "#E0E0E0" }}>
                 <Toolbar>
                     <IconButton onClick={toggleDrawer} edge="start" color="inherit">
