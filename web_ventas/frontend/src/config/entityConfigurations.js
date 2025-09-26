@@ -3,19 +3,19 @@ export const entityColumnSets = {
         { field: 'customer_id', headerName: 'ID Cliente', width:120, className: 'table-cell-smaller' },
         { field: 'name', headerName: 'Nombre', width:220 , className: 'table-cell' },
         { field: 'cust_account', headerName: 'Cuenta Cliente', width:180,  className: 'table-cell' },
-        { field: 'tax_id', headerName: 'CUIT', width:250, className: 'table-cell' },
+        { field: 'tax_id', headerName: 'CUIT', width:150, className: 'table-cell' },
         { field: 'address', headerName: 'Direccion',  width:280 , className: 'table-cell' },
-        { field: 'phone', headerName: 'Telefono', width:250 , className: 'table-cell' }, 
-        { field: 'email', headerName: 'Email', width:250 , className: 'table-cell' }
+        { field: 'phone', headerName: 'Telefono', width:150 , className: 'table-cell' }, 
+        { field: 'email', headerName: 'Email', width:180 , className: 'table-cell' }
     ],
     products : [
-        { field: 'product_id', headerName: 'Codigo producto', width:180 ,  className: 'table-cell-smaller' },
+        { field: 'product_id', headerName: 'Codigo', width: 150 ,  className: 'table-cell-smaller' },
         { field: 'product_desc', headerName: 'Descripcion', width:440 , className: 'table-cell-large' },
         { field: 'unit_price', headerName: 'Precio Unidad', width: 180 ,className: 'table-cell' },
-        { field: 'units_quantity', headerName: 'Cant en Paquete', width: 200 , className: 'table-cell' },
-        { field: 'unit_of_measure', headerName: 'Unidad Medida', width: 200 , className: 'table-cell-smaller' },
-        { field: 'stock_quantity', headerName: 'Cant. en Stock', width: 200 , className: 'table-cell-smaller' },
-        { field: 'category' , headerName: 'Categoria', width: 150, className: 'table-cell-smaller'}          
+        { field: 'units_quantity', headerName: 'Cant en Paquete', width: 150 , className: 'table-cell' },
+        { field: 'unit_of_measure', headerName: 'U. Medida', width: 120 , className: 'table-cell-smaller' },
+        { field: 'stock_quantity', headerName: 'Stock', width: 120 , className: 'table-cell-smaller' },
+        { field: 'category' , headerName: 'Categoria', width: 120, className: 'table-cell-smaller'}
     ],
     salesHeader: [
         {field: 'id', headerName:'N° Venta', width: 50, valueGetter: (params) => params.row?.id },

@@ -4,6 +4,7 @@ import { ConfirmDialog } from "../components/ConfirmDialog";
 import { useCrudModal } from "../hooks/useCrudModal";
 import { useConfirmDialog } from "../hooks/useConfirmDialog";
 import { UseTableData } from "../hooks/UseTableData";
+import { useTableRowWithMenu } from "../hooks/useTableRowWithMenu";
 import { useEntityConfiguration, UseEntityConfigurationKeys } from "../hooks/useEntityConfiguration";
 import {CustomersModal} from "../components/Modals/CustomersModal";
 import { CustomersRowMenu } from "../components/Menus/CustomersRowMenu";
@@ -29,24 +30,10 @@ export function CustomersPage() {
       [tableData, keyField]
     );
   
-    const renderRowMenu = useMemo(() => (params) => (
-      <CustomersRowMenu
-        row={params.row}
-        crudModal={crudModal}        
-        confirmDialog={confirmDialog} 
-      />
-    ), [crudModal,confirmDialog]);
-    
-    const columns = [
-      ...columnSet,
-      {
-        field: "actions",
-        headerName: "Acciones",
-        width: 100,
-        sortable: false,
-        renderCell: renderRowMenu
-      },
-    ];  
+    const columns = useTableRowWithMenu({
+                columnSet, 
+                RowMenuComponent: CustomersRowMenu,  
+                rowMenuProps: {crudModal, confirmDialog}})
 
     return (
       <div>

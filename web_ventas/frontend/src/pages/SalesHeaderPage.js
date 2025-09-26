@@ -10,9 +10,11 @@ import { getSalesDetails } from '../services/salesApi';
 import { SalesHeaderPageMenu } from '../components/Menus/SalesHeaderPageMenu';
 import { GenericTable } from '../components/GenericTable';
 import { UseTableData } from '../hooks/UseTableData';
+import { useTableRowWithMenu } from '../hooks/useTableRowWithMenu';
 import { getSalesHeaders } from '../services/salesApi';
 import { useTheme } from '@emotion/react';
 import { pageHeaderStyles } from '../styles/generalStyles';
+
 
 //TODO : Separar en custom hook vs Render
 export function SalesHeaderPage() {
@@ -36,7 +38,7 @@ export function SalesHeaderPage() {
       })
     }
     
-
+   /*
     const columns = [
       ...columnSet,
       {
@@ -53,7 +55,13 @@ export function SalesHeaderPage() {
           />
         ),
       },
-    ];    
+    ];    */
+
+
+    const columns = useTableRowWithMenu({
+                columnSet, 
+                RowMenuComponent: SalesHeaderRowMenu,  
+                rowMenuProps: {detailModal, setIsVoucherOpen, setRowDetailData}})
   
     return (
   <div>

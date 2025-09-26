@@ -10,6 +10,7 @@ import { getInvoiceHeaders } from "../services/invoicesApi"
 import { InvoiceRowMenu } from '../components/Menus/InvoiceRowMenu';
 import InvoicesMenu from '../components/Menus/InvoicesMenu';
 import { pageHeaderStyles } from '../styles/generalStyles';
+import { useTableRowWithMenu } from '../hooks/useTableRowWithMenu';
 
 
 export const InvoicesPage = () => {
@@ -26,21 +27,11 @@ export const InvoicesPage = () => {
         [tableData, keyField]
     );
 
-        const columns = [
-          ...columnSet,
-          {
-            field: "actions",
-            headerName: "Acciones",
-            width: 100,
-            sortable: false,
-            renderCell: (row) => (
-              <InvoiceRowMenu
-                row={row}                        
-              />
-            ),
-          },
-        ]; 
-
+    
+  const columns = useTableRowWithMenu({
+              columnSet, 
+              RowMenuComponent: InvoiceRowMenu,  
+              })
 
     return (
         <div>

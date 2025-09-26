@@ -12,6 +12,7 @@ import { GenericTable } from "../components/GenericTable";
 import { UseTableData } from "../hooks/UseTableData";
 import { getProductData } from "../services/productsApi";
 import { pageHeaderStyles } from "../styles/generalStyles";
+import { useTableRowWithMenu } from "../hooks/useTableRowWithMenu";
 
 export function ProductsPage() {
     
@@ -29,28 +30,12 @@ export function ProductsPage() {
       [tableData, keyField]
     );
 
-    const renderRowMenu = useMemo(() => (params) => (
-      <ProductsRowMenu
-        row={params.row}
-        crudModal={crudModal}
-        pricingModal={pricingModal}
-        confirmDialog={confirmDialog} 
-      />
-    ), [crudModal, pricingModal, confirmDialog]);
-  
-    const columns = useMemo(()=>[
-      ...columnSet,
-      {
-        field: "actions",
-        headerName: "Acciones",
-        width: 100,
-        sortable: false,
-        renderCell: renderRowMenu
-      },
-    ], [columnSet, renderRowMenu]);
+    const columns = useTableRowWithMenu({
+                        columnSet, 
+                        RowMenuComponent: ProductsRowMenu,  
+                        rowMenuProps: {crudModal, pricingModal, confirmDialog}})
 
-
-    console.log("GenericTable props", { tableDataRows, keyField, columns });    
+   
     return (
       <div>
         <div style={pageHeaderStyles()}>          

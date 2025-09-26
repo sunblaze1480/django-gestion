@@ -2,7 +2,8 @@ import React from "react"
 import { TableCell, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/EditOutlined";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
-import { useCrudActions } from "../../hooks/useCrudActions"
+import { useCrudActions } from "../../hooks/useCrudActions" 
+import {BaseMenu} from "./BaseMenu"
 
 export const CustomersRowMenu = ({row, crudModal, confirmDialog}) => {
     
@@ -10,12 +11,13 @@ export const CustomersRowMenu = ({row, crudModal, confirmDialog}) => {
         
     return (       
         <TableCell class='table-cell'>
-            <IconButton title='Editar' size="small" onClick={() => crudActions.handleEditClick(row)}>
-                <EditIcon  fontSize='inherit' color="secondary"/>
-            </IconButton>
-            <IconButton title='Borrar' size="small" onClick={() => crudActions.handleDeleteClick(row)}>
-                <DeleteIcon fontSize='inherit' color="error"/>
-            </IconButton>
+            <BaseMenu
+                items={[
+                    {label: "Editar", onClick:()=>crudActions.handleEditClick(row)},
+                    {label:"Borrar", onClick:()=>crudActions.handleDeleteClick(row)}
+                ]}
+            >
+            </BaseMenu>
         </TableCell>
     )
 }

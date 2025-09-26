@@ -1,7 +1,6 @@
 import React, {useState} from "react"
 import { TableCell, IconButton, Button } from "@mui/material";
-import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
-import {Link} from "react-router-dom"
+import { BaseMenu } from "./BaseMenu";
 
 export const InvoiceRowMenu = ({row}) => {
         
@@ -9,9 +8,12 @@ export const InvoiceRowMenu = ({row}) => {
 
     return (       
         <TableCell class = 'table-cell'>
-            <IconButton component={Link} to={`/invoices/${row.id}`} title='Ver Detalle' size="small" >
-                <VisibilityIcon color='warning' fontSize="inherit" ></VisibilityIcon>
-            </IconButton>
+            <BaseMenu
+                items={[
+                    {label: "Ver Detalle", onClick:()=>window.location.href=`/invoices/${row.id}`},
+                ]}
+            >
+            </BaseMenu>
         </TableCell>
     )
 }

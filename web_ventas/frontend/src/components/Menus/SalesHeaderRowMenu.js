@@ -4,6 +4,7 @@ import PrintIcon from '@mui/icons-material/Print';
 import VisibilityIcon from '@mui/icons-material/VisibilityOutlined';
 import { useSalesHeaderRowMenu } from "../../hooks/useSalesHeaderRowMenu";
 import DescriptionIcon from '@mui/icons-material/DescriptionOutlined';
+import { BaseMenu } from "./BaseMenu";
 
 export const SalesHeaderRowMenu = ({row, detailModal, voucherModal, setDetailData}) => {
         
@@ -11,12 +12,13 @@ export const SalesHeaderRowMenu = ({row, detailModal, voucherModal, setDetailDat
 
     return (       
         <TableCell class = 'table-cell'>
-            <IconButton title='Comprobante' size="small" onClick={()=>actions.handleVoucherClick(row)}>
-                <DescriptionIcon color='secondary'  fontSize="inherit" ></DescriptionIcon>
-            </IconButton>
-            <IconButton title='Ver Detalle' size="small" onClick={()=>actions.handleViewDetailsClick(row)}>
-                <VisibilityIcon color='warning' fontSize="inherit" ></VisibilityIcon>
-            </IconButton>
+            <BaseMenu
+                items={[
+                    {label: "Ver Comprobante", onClick:()=>actions.handleVoucherClick(row)},
+                    {label:"Ver Detalle", onClick:()=>actions.handleViewDetailsClick(row)}
+                ]}
+            >
+            </BaseMenu>
         </TableCell>
     )
 }
