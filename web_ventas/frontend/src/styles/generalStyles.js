@@ -48,21 +48,19 @@ export const alertStyles = {
 }
 
 export const containerStyles = (theme) =>( {
-  width: '96%', marginLeft:'2%', marginRight: '2%', backgroundColor: theme.palette.container.main, color : theme.palette.container.text,
+  width: '100%', marginRight: '1%', backgroundColor: theme.palette.container.main, color : theme.palette.container.text,
   borderRadius: '30px',
     overflowY: 'auto', // add vertical scroll
     overflowX: 'auto',
     padding: '10px',    // optional: inner spacing
-    boxSizing: 'border-box'
 })
 
 export const containerAltStyles = (theme) =>( {
-  width: '96%', marginLeft:'2%', marginRight: '2%', backgroundColor: theme.palette.container.main, color : theme.palette.container.text,
+  width: '100%', marginRight: '1%', backgroundColor: theme.palette.container.main, color : theme.palette.container.text,
   borderRadius: '30px',
     overflowY: 'auto', // add vertical scroll
     overflowX: 'auto',
     padding: '5px',    // optional: inner spacing
-    boxSizing: 'border-box'
 })
 
 
@@ -91,19 +89,3 @@ export const pageHeaderStyles = () => ({
 })
 
 
-export const modalContentStyles = (theme)=>  ({
-  position: 'absolute',
-  fontFamily: 'Roboto',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  backgroundColor: theme.palette.container.main,
-  color: theme.palette.container.text,
-  border: '2px solid #000',
-  borderRadius: '10px',
-  boxShadow: '0 8px 20px rgba(0, 0, 0, 0.5)',
-  animation: 'fadeIn 0.3s ease-in-out',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '16px', // gap:2 in MUI spacing = 16px
-})

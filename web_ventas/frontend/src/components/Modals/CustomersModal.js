@@ -1,21 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import Modal from '@mui/material/Modal';
-import { TextField, Button, Typography } from '@mui/material';
-import Box from '@mui/material/Box';
-import { callUpdateCreateAPI } from '../../services/customersApi';
-import { modalTextFieldStyle, modalTitleStyle } from '../../styles/modalStyles';
+//MUI IMports
+import { TextField, Button, Typography, Modal, Box } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+//APIs
+import { callUpdateCreateAPI } from '../../services/customersApi';
+//Styles
+import { modalTextFieldStyle, modalTitleStyle, modalContentStyle } from '../../styles/modalStyles';
+import { useTheme } from '@emotion/react';
+
 
 export function CustomersModal({open, onModalClose, onDatabaseAction, rowData, mode}) {
 
     if (!rowData) {
         return null;
-      }    
-    const [editedData, setEditedData] = useState(rowData?rowData:{});
-    
-    const handleChange = (field, value) => {setEditedData((prevEditedData)=>({...prevEditedData, [field]:value}))}
+    }
 
+    const theme = useTheme();
+    const [editedData, setEditedData] = useState(rowData?rowData:{});
     useEffect(()=>{setEditedData(rowData? rowData:{})}, [rowData]);
+    
+    //Functions
+    const handleChange = (field, value) => {setEditedData((prevEditedData)=>({...prevEditedData, [field]:value}))}
 
     const handleSave = async ()=> {        
         callUpdateCreateAPI(editedData, mode).then((msg)=>{            
@@ -27,12 +32,14 @@ export function CustomersModal({open, onModalClose, onDatabaseAction, rowData, m
         })                        
     }
 
+
+
     if (editedData){
         return (            
             <Modal
                 open={open} 
                 onClose={onModalClose}>                                                                                                
-                    <Box class='modalContent content-center modal-small'>
+                    <Box style={modalContentStyle(theme)}>
                     <div class='modalTitle'>                        
                         <Typography component="h4" variant="h4" sx={modalTitleStyle}>
                             {rowData.customer_id?

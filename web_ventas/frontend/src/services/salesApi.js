@@ -40,7 +40,7 @@ export const getSalesDetails = (orderId) => {
                 reject(json_resp.message)
             }
         }catch (e){
-            reject(json.stringify(response))
+            reject(json.stringify(json_resp))
         }
 
     })
@@ -56,12 +56,11 @@ export const createSale = async (saleData) => {
             if (response.ok) {
                 resolve(json_resp);
             } else {
-                reject(response)
+                reject(JSON.stringify(json_resp))
             }
         }
         catch (error) {
-            console.error(error.message)
-            reject(error.message);
+            reject(error);
         }
     })
 }
@@ -76,10 +75,9 @@ export const MakePayment = async (data) => {
             if (response.ok) {
                 resolve(json_resp)
             } else {
-                reject(response)
+                reject(json.stringify(json_resp))
             }
         } catch (error) {
-            console.error(error);
             reject(error);
         }
     })
@@ -96,10 +94,9 @@ export const changeSalesOrderStatus = async(data) => {
                 resolve(json_resp)
             }else 
             {
-                reject(response)
+                reject(json.stringify(json_resp))
             }
         }catch(error){            
-            console.log("ded")
             reject(error)
         }
     })

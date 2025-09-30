@@ -4,8 +4,6 @@ import { BaseMenu } from "./BaseMenu";
 
 export const InvoiceRowMenu = ({row}) => {
         
-    console.log(row)
-
     return (       
         <TableCell class = 'table-cell'>
             <BaseMenu

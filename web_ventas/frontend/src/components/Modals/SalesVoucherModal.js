@@ -1,93 +1,111 @@
-import React, {useState, useContext, useRef} from 'react'
-import { Modal, Table, TableRow, TableCell, TableContainer, TableHead, TableBody, TableFooter , Button } from '@mui/material'
-import PrintIcon from '@mui/icons-material/Print';
-import { TableDataProvider } from '../../context/TableDataContext';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import React from 'react';
+import {
+  Modal,
+  Box,
+  Typography,
+  Table,
+  TableRow,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableBody,
+  Stack,
+  Divider
+} from '@mui/material';
+import { useTheme, styled } from '@mui/material/styles';
 
+const modalInvoiceStyle = (theme) => ({
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '80%',
+  maxWidth: '800px',
+  maxHeight: '90vh',
+  bgcolor: theme.palette.background.paper,
+  borderRadius: 8,
+  boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
+  p: 4,
+  overflowY: 'auto',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: theme.spacing(3),
+});
 
+// Optional: Alternate row color for better readability
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(even)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+}));
 
-export function SalesVoucherModal({entityData, open, onClose}){
+export function SalesVoucherModal({ salesData, open, onClose }) {
+  const theme = useTheme();
 
-    const modalRef = useRef(null);
+  console.log(salesData)
 
-    const handleCopyToClipboard = async () => {        
-        try {
-            if (modalRef.current) {                                                                                
-                const contentDiv = document.getElementById('main-section');
-                const range = document.createRange()
-                range.selectNodeContents(contentDiv)
-                const selection = window.getSelection()
-                selection.removeAllRanges()
-                selection.addRange(range)
-                document.execCommand('copy')
-                selection.removeAllRanges()
-                                        
-            }
-        } catch (error) {
-            console.error('Failed to copy text: ', error);
-            alert('Failed to copy contents to clipboard.');
-        }
-    }; 
-    return (
-        <Modal
-            open={open}
-            onClose={onClose}>
-            <div id = 'main-section' ref={modalRef} class='modalContent content-center modal-small'>
-                <Table>
-                    <TableHead align='left' class='content-left'>
-                        <TableRow class='content-left'>
-                            <TableCell align='left' class='order-detail-modal-content'>{entityData.customer.address}</TableCell>                                
-                        </TableRow>
-                        <TableRow class='content-left'>
-                            <TableCell align='left' class='order-detail-modal-content'>{entityData.order_date}</TableCell>                                
-                        </TableRow>
-                        <TableRow>                            
-                        </TableRow>
-                        <TableRow>                            
-                        </TableRow>
-                    </TableHead>
-                </Table>            
-                <TableContainer class="table-container">
-                    <Table sx={{ minWidth: 650, maxWidth:650 }} size="large" class='styled-table'>                        
-                        <TableHead class='table-head'>
-                            <TableRow>
-                                <TableCell class='content-center' rowSpan={2}>Artículo</TableCell>
-                                <TableCell class='content-center' rowSpan={2}>Precio</TableCell>
-                                <TableCell class='content-center' rowSpan={2}>Cantidad</TableCell>                                
-                                <TableCell class='content-center' rowSpan={2}>Subtotal</TableCell>
-                            </TableRow>
-                            <TableRow>                                
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {entityData.order_detail.map((detail)=>(
-                                <TableRow>                                    
-                                    <TableCell class='table-cell'>{detail.product.product_desc}</TableCell>
-                                    <TableCell class='table-cell-smaller'>${detail.product.unit_price}</TableCell>
-                                    <TableCell class='table-cell-smaller'>{detail.quantity}</TableCell>
-                                    <TableCell class='table-cell'>${detail.amount}</TableCell>
-                                </TableRow>
-                            ))}
-                            <TableRow>                                
-                            </TableRow>
-                            <TableRow></TableRow>
-                            <TableRow className='sales-voucher-total'>                                
-                                <TableCell rowSpan={1} colSpan={2}></TableCell>
-                                <TableCell class="content-center">Total: </TableCell>
-                                <TableCell class="content-center" >${entityData.total_amount} </TableCell>
-                            </TableRow>                
-                        </TableBody>
-                    </Table>
-                </TableContainer>                 
-                <Button
-                        variant="contained"
-                        startIcon={<ContentCopyIcon />}
-                        onClick={handleCopyToClipboard}
-                    >
-                        Copiar
-                    </Button>
-                
-            </div> 
-        </Modal>        
-    )
+  // Compute total
+const totalAmount = salesData.order_detail.reduce(
+  (acc, item) => acc + (parseFloat(item.amount) || 0),
+  0
+);
+
+  return (
+    <Modal open={open} onClose={onClose}>
+      <Box sx={modalInvoiceStyle(theme)}>
+        {/* Header */}
+        <Stack direction="row" justifyContent="space-between" alignItems="center">
+          <Typography variant="h6">Factura #{salesData.id}</Typography>
+          <Typography variant="subtitle2">{salesData.date}</Typography>
+        </Stack>
+
+        <Stack direction="column" spacing={1}>
+          <Typography variant="subtitle1">
+            Cliente: <strong>{salesData.customer.name}</strong>
+          </Typography>
+          <Typography variant="subtitle2">
+            {salesData.customer.address}
+          </Typography>
+        </Stack>
+
+        <Divider />
+
+        {/* Table */}
+        <TableContainer>
+          <Table sx={{ minWidth: 600 }} size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell>Descripción</TableCell>
+                <TableCell align="right">Precio Unitario</TableCell>
+                <TableCell align="right">Cantidad</TableCell>
+                <TableCell align="right">Subtotal</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {salesData.order_detail.map((item, idx) => (
+                <StyledTableRow key={idx}>
+                  <TableCell>{item.product.product_desc}</TableCell>
+                  <TableCell align="right">${item.product.unit_price}</TableCell>
+                  <TableCell align="right">{item.quantity}</TableCell>
+                  <TableCell align="right">
+                    ${(item.product.unit_price * item.quantity)}
+                  </TableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+
+        <Divider />
+
+        {/* Footer: Total */}
+        <Stack direction="row" justifyContent="flex-end" spacing={2}>
+          <Typography variant="subtitle1">Total:</Typography>
+          <Typography variant="h6" fontWeight={700}>
+            ${totalAmount}
+          </Typography>
+        </Stack>
+      </Box>
+    </Modal>
+  );
 }

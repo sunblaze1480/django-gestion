@@ -59,10 +59,10 @@ export function SalesHeaderPage() {
 
 
     const columns = useTableRowWithMenu({
-                columnSet, 
-                RowMenuComponent: SalesHeaderRowMenu,  
-                rowMenuProps: {detailModal, setIsVoucherOpen, setRowDetailData}})
-  
+          columnSet, 
+          RowMenuComponent: SalesHeaderRowMenu,  
+          rowMenuProps: { detailModal, setVoucherOpen: setIsVoucherOpen, setDetailData: setRowDetailData }
+        })
     return (
   <div>
     {/* Page header */}
@@ -100,7 +100,7 @@ export function SalesHeaderPage() {
     {isVoucherOpen && (
       <EntityDataProvider data={rowDetailData}>
         <SalesVoucherModal
-          entityData={rowDetailData}
+          salesData={rowDetailData}
           open={isVoucherOpen}
           onClose={() => setIsVoucherOpen(false)}
         />

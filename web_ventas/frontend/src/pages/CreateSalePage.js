@@ -31,25 +31,24 @@ export function CreateSalePage () {
     } = UseCreateSalePage();    
 
     return (
-        <div >
+        <div>
             <div>
                 <Typography variant="h6" component="h6" className='header-title'>
                     Nueva Venta
                 </Typography>
             </div>
-            <hr></hr>          
-
-            <div style={{ ...containerStyles(theme), height: '70vh' }}>
-                <div class='sales-input'>                
+            <hr></hr>
+            <div style={{ width:'30%', padding:'8px'}}>
                     <Autocomplete
                         id="customer-selection"
-                        sx={{ width: '100%' }}        
                         options={customerData}                
                         getOptionLabel={(option)=>`${option.customer_id} - ${option.name} - ${option.address}`}                
                         onChange={handleCustomerChange}
-                        renderInput={(params) => <TextField margin="dense" label="Cliente" variant='standard' {...params} />}
-                    ></Autocomplete>  
-                </div>
+                        renderInput={(params) => <TextField size="small" label="Cliente" variant='filled' {...params} />}
+                    ></Autocomplete>
+            </div>
+            <div style={{ ...containerStyles(theme), height: '55vh' }}>
+
                 <Button variant="contained" color="secondary" size="small" onClick={handleAddProduct} startIcon={<AddCircleIcon/>}>
                     Agregar Producto
                 </Button>

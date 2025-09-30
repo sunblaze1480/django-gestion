@@ -47,13 +47,13 @@ export const UseCreateSalePage =() => {
     }
 
     const handleCustomerChange = (event, newValue) =>{
-        setSalesorder((prevSalesOrder)=>({...prevSalesOrder, customer : newValue && newValue.customer_id !== undefined ? newValue.customer_id:null}));                
+        setSalesorder((prevSalesOrder)=>({...prevSalesOrder, customer_id : newValue && newValue.customer_id !== undefined ? newValue.customer_id:null}));                
     }
 
     const handleAddProduct = () => {
         setSalesorder((prevSalesOrder)=>{
             const updatedDetail = [...prevSalesOrder.order_detail];
-            updatedDetail.push({product: 0, unit_price: 0, quantity: 1, amount:0});
+            updatedDetail.push({product_id: 0, unit_price: 0, quantity: 1, amount:0});
             return {...prevSalesOrder, order_detail:updatedDetail};
         })
     }
@@ -62,7 +62,7 @@ export const UseCreateSalePage =() => {
          const tax = newValue.unit_price * RATE_IVA
 
          const detailLine = {
-            product : newValue.product_id,
+            product_id : newValue.product_id,
             status: "Pending",    
             quantity: 1,
             amount: newValue.unit_price,
@@ -137,8 +137,8 @@ export const UseCreateSalePage =() => {
             setSalesorder(defaultSalesOrder);                        
 
         }).catch((error)=>{
-            alert("error calling Create API")
-            console.error("Error calling Create API");            
+            openAlert('error', error)
+            console.error(error);            
         })
     }
 

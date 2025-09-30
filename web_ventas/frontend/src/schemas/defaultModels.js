@@ -30,7 +30,7 @@ export const defaultSalesHeader = {
 }
 
 export const defaultSalesOrder = {  
-        customer: 0,
+        customer_id: 0,
         order_type: "SO",
         order_date: "2024-01-01",
         order_status: "Pendiente",
@@ -39,7 +39,7 @@ export const defaultSalesOrder = {
         total_net: 0.0,
         order_detail: [
     {            
-      product: 0,
+      product_id: 0,
       status: " ",    
       quantity: 0.0,
       amount: 0.0,
