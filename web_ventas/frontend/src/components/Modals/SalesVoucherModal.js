@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {
   Modal,
   Box,
@@ -10,7 +10,8 @@ import {
   TableHead,
   TableBody,
   Stack,
-  Divider
+  Divider,
+  Button
 } from '@mui/material';
 import { useTheme, styled } from '@mui/material/styles';
 
@@ -41,17 +42,45 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export function SalesVoucherModal({ salesData, open, onClose }) {
   const theme = useTheme();
-
-  console.log(salesData)
-
+  
   // Compute total
 const totalAmount = salesData.order_detail.reduce(
   (acc, item) => acc + (parseFloat(item.amount) || 0),
   0
 );
+  const modalRef = useRef(null);
+
+const handleCopyToClipboard = async () => {
+  try {
+    const contentDiv = document.getElementById('main-section');
+    if (!contentDiv) return;
+
+    // Get the HTML and plain text version
+    const html = contentDiv.outerHTML;
+    const text = contentDiv.innerText;
+
+    // Create clipboard items
+    const blobHtml = new Blob([html], { type: 'text/html' });
+    const blobText = new Blob([text], { type: 'text/plain' });
+
+    const clipboardItem = new ClipboardItem({
+      'text/html': blobHtml,
+      'text/plain': blobText,
+    });
+
+    await navigator.clipboard.write([clipboardItem]);
+    console.log('✅ Copiado con formato');
+  } catch (error) {
+    console.error('❌ Failed to copy content: ', error);
+    alert('Failed to copy contents to clipboard.');
+  }
+};
+
+
 
   return (
     <Modal open={open} onClose={onClose}>
+      <div id="main-section">              
       <Box sx={modalInvoiceStyle(theme)}>
         {/* Header */}
         <Stack direction="row" justifyContent="space-between" alignItems="center">
@@ -105,7 +134,11 @@ const totalAmount = salesData.order_detail.reduce(
             ${totalAmount}
           </Typography>
         </Stack>
+        <Stack direction="row" justifyContent="flex-end" spacing={2}>
+          <Button variant="contained" onClick={handleCopyToClipboard}>Copiar</Button>
+        </Stack>
       </Box>
+      </div>
     </Modal>
   );
 }

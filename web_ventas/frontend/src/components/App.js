@@ -3,25 +3,13 @@ import {render} from "react-dom";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ClippedDrawer from "./Menus/ClippedDrawer";
 import TopNavBar from "./TopNavBar"
-import { TableDataProvider } from "../context/TableDataContext";
-import { getCustomerData } from "../services/customersApi";
-import { getSalesHeaders } from "../services/salesApi";
-import { SalesHeaderPage } from "../pages/SalesHeaderPage";
-import { CreateSalePage } from "../pages/CreateSalePage";
-import { ProductsPage } from "../pages/ProductsPage";
-import { CustomersPage } from "../pages/CustomersPage";
-import { getPriceListsHeaders } from "../services/priceListApi";
-import { PriceListHeaderPage } from "../pages/PriceListHeaderPage";
 import { AlertSnackbar } from "./AlertSnackbar";
 import { AlertsContextProvider } from "../context/AlertsContext";
-import { CreatePriceListPage } from "../pages/CreatePriceListPage";
-import { ShipmentsPage } from "../pages/ShipmentsPage";
-import { InvoicesPage } from "../pages/InvoicesPage";
-import { CreateInvoicePage } from "../pages/CreateInvoicePage";
-import { InvoiceDetailPage } from "../pages/InvoiceDetailPage"
 import { ThemeContextProvider } from "../context/ThemeContext";
-import { ThemeProvider, CssBaseline } from '@mui/material';
+import { CssBaseline } from '@mui/material';
 import { AppBreadcrumbs } from "./AppBreadcrumbs";
+import { AppRouter } from "./AppRouter";
+
 export default function App () {    
 
     const [open, setOpen] = useState(false)
@@ -33,66 +21,21 @@ export default function App () {
         return(            
             <ThemeContextProvider>
                 <CssBaseline />
-            <div id='app'>
-                <AlertsContextProvider>
-                    <Router>
+                <div id='app'>
+                    <AlertsContextProvider>
                         <TopNavBar open={open} toggleDrawer={toggleDrawer}></TopNavBar>
-                        <ClippedDrawer open={open} setOpen={setOpen}></ClippedDrawer>                        
-                        <div class='content'>
-                            <AppBreadcrumbs/>
-                        <div style={{ padding: '0px 16px' }}>
-                            <Routes>
-                            <Route path='/products' element={                                
-                                    <ProductsPage />                                 
-                            } />                               
-                            <Route path='/customers' element={
-                                <TableDataProvider getData={getCustomerData}>
-                                    <CustomersPage/>
-                                </TableDataProvider>                                
-                            } />   
-                             <Route path='/sales/create' element={
-                                <TableDataProvider getData={getCustomerData}>
-                                    <CreateSalePage />
-                                </TableDataProvider>                                
-                            } />                                 
-                            <Route path='/sales' element={
-                                <TableDataProvider getData={getSalesHeaders}>
-                                    <SalesHeaderPage></SalesHeaderPage>
-                                </TableDataProvider>
-                            }/>
-                            <Route path='/pricelists/create' element={
-                                <TableDataProvider getData={getPriceListsHeaders}>
-                                    <CreatePriceListPage></CreatePriceListPage>
-                            </TableDataProvider>
-                            }/>
-                            <Route path='/pricelists' element={
-                                <TableDataProvider getData={getPriceListsHeaders}>
-                                    <PriceListHeaderPage></PriceListHeaderPage>
-                            </TableDataProvider>
-                            }/>
-                            <Route path='/shipments' element={
-                                <TableDataProvider getData={getPriceListsHeaders}>
-                                    <ShipmentsPage></ShipmentsPage>
-                            </TableDataProvider>
-                            }/>
-                            <Route path='invoices' element= {
-                                <InvoicesPage/>
-                            }/>
-                            <Route path='invoices/:id' element= {
-                                <InvoiceDetailPage/>
-                            }/>
-                            <Route path='invoices/create' element = {
-                                <CreateInvoicePage/>
-                            }/>
-                        </Routes>
-                        </div>
-                        
-                        </div>
-                    </Router>
-                    <AlertSnackbar>                        
-                    </AlertSnackbar>
-                </AlertsContextProvider>
-            </div>
+                        <Router>                                               
+                            <ClippedDrawer open={open} setOpen={setOpen}></ClippedDrawer> 
+                            <div class='content'>
+                                <AppBreadcrumbs/>
+                                <div style={{ padding: '0px 16px' }}>
+                                    <AppRouter/>
+                                </div>                        
+                            </div>
+                        </Router>
+                        <AlertSnackbar/>                                            
+                    </AlertsContextProvider>
+                </div>
             </ThemeContextProvider>
         ); 
     

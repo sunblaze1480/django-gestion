@@ -112,7 +112,7 @@ export const UseCreateSalePage =() => {
     }
 
     const handlePriceChange =(event, index) =>{
-        const {value} = event.target * 1
+        const value = event.target.value
         setSalesorder((prevSalesOrder)=> 
             updatePriceAndTotal(prevSalesOrder, value, index)
         )

@@ -26,10 +26,10 @@ export const callEntityDeleteApi = (entity, id) => {
       const response = await fetch(`${apiConfig[entity].delete.endpoint}${id}`, apiConfig[entity].delete.props)
       if (response.ok) {
         const resp = await response.json();
-        resolve(resp.message);
+        resolve(resp);
       } else {
         console.log(response);
-        reject("Error calling delete API");
+        reject(resp);
       }
     } catch (error) {
       console.log(error.message);
